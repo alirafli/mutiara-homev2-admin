@@ -116,7 +116,7 @@ function Signin() {
                     <FormLabel>Password</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder="type your password"
+                        placeholder="Password harus diatas 8 huruf!"
                         type="password"
                         {...field}
                       />
