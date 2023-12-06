@@ -1,8 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-
-import { useTheme } from "next-themes";
+import React from "react";
 
 import SigninForm from "./SigninForm";
 import { ModeToggle } from "@/components/toggle-theme";
@@ -10,16 +8,8 @@ import { ImageWrapper, SigninWrapper } from "../styles";
 import LogoTheme from "@/components/ui/logo-theme";
 
 function LogoContent() {
-  const { theme } = useTheme();
-  const [themes, setTheme] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (theme) {
-      setTheme(theme);
-    }
-  }, [theme]);
   return (
-    <SigninWrapper mode={themes}>
+    <SigninWrapper>
       <title>Sign In</title>
       <ModeToggle />
       <ImageWrapper>
