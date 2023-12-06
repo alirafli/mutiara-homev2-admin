@@ -4,6 +4,7 @@ import "../globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import Topbar from "@/components/ui/topbar";
 import { getUserById } from "@/lib/actions";
+import Sidebar from "@/components/ui/sidebar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -29,9 +30,13 @@ export default async function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Topbar user={user?.[0]} />
-          {children}
-          <h6>footer </h6>
+          <div className="flex w-screen">
+            <Sidebar />
+            <div className="w-full">
+              <Topbar user={user?.[0]} />
+              {children}
+            </div>
+          </div>
         </ThemeProvider>
       </body>
     </html>

@@ -9,7 +9,7 @@ interface TopBarProps {
 
 export default function Topbar({ user }: TopBarProps) {
   return (
-    <div className="flex justify-between shadow-lg dark:shadow-lg-dark px-3 md:px-14 py-2 items-center mb-6">
+    <div className="flex justify-between bg-zinc-200 dark:bg-zinc-900 shadow-lg dark:shadow-lg-dark px-3 md:px-14 py-2 items-center mb-6 -ml-6">
       <RxHamburgerMenu size={20} className="cursor-pointer" />
 
       <div className="flex items-center gap-8">
@@ -17,7 +17,7 @@ export default function Topbar({ user }: TopBarProps) {
           <h1 className="scroll-m-20 text-lg tracking-tight">
             Halo, {user?.name ?? "..."}!
           </h1>
-          <h2 className="scroll-m-20 text-md tracking-tight text-gray-400">
+          <h2 className="scroll-m-20 text-md tracking-tight text-zinc-500">
             {user?.role ?? "..."}
           </h2>
         </div>

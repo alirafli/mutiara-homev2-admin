@@ -1,22 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { useTheme } from "next-themes";
+"use client";
+
+import React from "react";
 import Image from "next/image";
+import { useTheme } from "next-themes";
 
 function LogoTheme() {
-  const [logo, setLogo] = useState<string>("/logo.png");
   const { theme } = useTheme();
-
-  useEffect(() => {
-    if (theme === "dark") {
-      setLogo("/logo_white.png");
-    } else {
-      setLogo("/logo.png");
-    }
-  }, [theme]);
-
   return (
     <Image
-      src={logo}
+      src={theme === "light" ? "/logo.png" : "/logo_white.png"}
       width={200}
       height={200}
       layout="responsive"
