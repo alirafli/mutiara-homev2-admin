@@ -55,7 +55,7 @@ function SigninForm() {
   }
 
   return (
-    <Card>
+    <Card className="shadow-lg dark:shadow-lg-dark">
       <div>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">

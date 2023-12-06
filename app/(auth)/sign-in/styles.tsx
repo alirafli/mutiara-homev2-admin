@@ -19,10 +19,6 @@ export const SigninWrapper = styled.div<SigninWrapperProps>`
   // card
   & > div:nth-of-type(2) {
     margin-top: 1.5rem;
-    box-shadow: ${({ mode }) =>
-      mode === "dark"
-        ? "rgba(43, 43, 43, 0.2) 0px 8px 24px"
-        : "rgba(149, 157, 165, 0.2) 0px 8px 24px"};
     padding: 2rem;
     width: 450px;
 
