@@ -19,6 +19,7 @@ async function Dashboard() {
 
   return (
     <div>
+      <title>Dashboard</title>
       <h1>Dashboard</h1>
       <div>
         <form action={logout}>

@@ -9,7 +9,7 @@ interface TopBarProps {
 
 export default function Topbar({ user }: TopBarProps) {
   return (
-    <div className="flex justify-between bg-zinc-200 dark:bg-zinc-900 shadow-lg dark:shadow-lg-dark px-3 md:px-14 py-2 items-center mb-6 -ml-6">
+    <div className="flex justify-between bg-zinc-200 dark:bg-zinc-900 shadow-lg dark:shadow-lg-dark px-3 md:px-14 py-2 items-center mb-6">
       <RxHamburgerMenu size={20} className="cursor-pointer" />
 
       <div className="flex items-center gap-8">
