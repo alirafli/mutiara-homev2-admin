@@ -85,7 +85,7 @@ function SigninForm() {
                   <FormLabel>Password</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="Password harus diatas 8 huruf!"
+                      placeholder="Password Minimal 8 karakter!"
                       type="password"
                       {...field}
                     />
