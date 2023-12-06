@@ -18,7 +18,7 @@ async function Dashboard() {
   };
 
   return (
-    <div>
+    <div className='pl-6'>
       <title>Dashboard</title>
       <h1>Dashboard</h1>
       <div>
