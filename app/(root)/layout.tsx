@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import Topbar from "@/components/ui/topbar";
 import { getUserById } from "@/lib/actions";
 import Sidebar from "@/components/ui/sidebar";
+import { ReduxProviders } from "@/lib/redux/provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,20 +25,22 @@ export default async function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="light"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <div className="flex w-screen">
-            <Sidebar />
-            <div className="w-full">
-              <Topbar user={user?.[0]} />
-              {children}
+        <ReduxProviders>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="light"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <div className="flex w-screen">
+              <Sidebar />
+              <div className="w-full">
+                <Topbar user={user?.[0]} />
+                {children}
+              </div>
             </div>
-          </div>
-        </ThemeProvider>
+          </ThemeProvider>
+        </ReduxProviders>
       </body>
     </html>
   );
