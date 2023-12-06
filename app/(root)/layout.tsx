@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "../globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import Topbar from "@/components/ui/topbar";
+import { getUserById } from "@/lib/actions";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -12,11 +13,13 @@ export const metadata: Metadata = {
   icons: "favicon.png",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const { data: user } = await getUserById();
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
@@ -26,7 +29,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Topbar />
+          <Topbar user={user?.[0]} />
           {children}
           <h6>footer </h6>
         </ThemeProvider>
