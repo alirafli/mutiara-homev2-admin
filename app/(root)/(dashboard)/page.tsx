@@ -1,8 +1,13 @@
 import React from "react";
+import { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { readUserSession } from "@/lib/actions";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { Button } from "@/components/ui/button";
+
+export const metadata: Metadata = {
+  title: "Dashboard",
+};
 
 async function Dashboard() {
   const { data } = await readUserSession();
@@ -18,8 +23,7 @@ async function Dashboard() {
   };
 
   return (
-    <div className='pl-6'>
-      <title>Dashboard</title>
+    <div className="pl-6">
       <h1>Dashboard</h1>
       <div>
         <form action={logout}>

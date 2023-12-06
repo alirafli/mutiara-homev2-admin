@@ -10,7 +10,6 @@ import LogoTheme from "@/components/ui/logo-theme";
 function LogoContent() {
   return (
     <SigninWrapper>
-      <title>Sign In</title>
       <ModeToggle />
       <ImageWrapper>
         <LogoTheme />
