@@ -1,7 +1,6 @@
 import styled from "@emotion/styled";
-import { SigninWrapperProps } from "./types";
 
-export const SigninWrapper = styled.div<SigninWrapperProps>`
+export const SigninWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
