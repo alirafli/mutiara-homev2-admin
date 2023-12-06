@@ -50,11 +50,7 @@ function SigninForm() {
       toast({
         variant: "destructive",
         title: "Fail to Login",
-        description: (
-          <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-            <code className="text-white">{`${error.status}: ${error.message}`}</code>
-          </pre>
-        ),
+        description: `${error.status}: ${error.message}`,
       });
   }
 
