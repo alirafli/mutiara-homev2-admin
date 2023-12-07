@@ -5,7 +5,8 @@ import { readUserSession } from "@/lib/actions";
 import MoneyInformationCard from "./components/MoneyInformationCard";
 import { getAllFinanceReport } from "./actions";
 import { ReportTable } from "./components/ReportTable";
-import HouseIncomePie from "./components/HouseIncomePie";
+import HouseIncomePie from "./components/HouseIncomeChart";
+import IncomeChart from "./components/IncomeChart";
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -49,6 +50,7 @@ async function Dashboard() {
         <ReportTable />
         <HouseIncomePie />
       </div>
+      <IncomeChart />
     </div>
   );
 }
