@@ -10,14 +10,19 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { ReportFinance } from "@/types/financeReport";
+import { formatDate } from "@/utils/DateFormatter";
 import thousandAndDecimalSeparator from "@/utils/NumberFormatter";
 import { ColumnDef } from "@tanstack/react-table";
 import { MoreHorizontal } from "lucide-react";
 
 export const columns: ColumnDef<ReportFinance>[] = [
   {
-    accessorKey: "date",
+    accessorKey: "created_at",
     header: "Tanggal",
+    cell: ({ getValue }) => {
+      const value = formatDate(getValue() as string);
+      return value;
+    },
   },
   {
     accessorKey: "renter",
@@ -36,7 +41,7 @@ export const columns: ColumnDef<ReportFinance>[] = [
     header: "Akun",
   },
   {
-    accessorKey: "house",
+    accessorKey: "house_name",
     header: "Nama Rumah",
   },
   {
@@ -67,7 +72,7 @@ export const columns: ColumnDef<ReportFinance>[] = [
             <DropdownMenuItem>Update</DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem className="text-red-800 dark:text-red-00 font-medium">
-              Delete {report.id}
+              Delete {report.id?.slice(0, 4)}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

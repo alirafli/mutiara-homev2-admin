@@ -29,6 +29,10 @@ async function Dashboard() {
     return redirect("/sign-in");
   }
 
+  if (!report) {
+    return <h1>loading</h1>;
+  }
+
   return (
     <div className="px-6">
       <h1 className="scroll-m-20 text-3xl font-bold tracking-tight lg:text-4xl mb-8">
@@ -47,7 +51,7 @@ async function Dashboard() {
         />
       </div>
       <div className="flex mt-6 flex-col md:flex-row">
-        <ReportTable />
+        <ReportTable report={report ?? []} />
         <HouseIncomePie />
       </div>
       <IncomeChart />

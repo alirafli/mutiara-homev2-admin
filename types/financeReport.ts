@@ -5,7 +5,7 @@ export interface ReportFinance {
   account: string;
   house: string;
   amount: number;
-  date: string;
+  created_at: string;
   note: string;
   category: string;
   type: string;
