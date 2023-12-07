@@ -5,6 +5,7 @@ import { readUserSession } from "@/lib/actions";
 import MoneyInformationCard from "./components/MoneyInformationCard";
 import { getAllFinanceReport } from "./actions";
 import { ReportTable } from "./components/ReportTable";
+import HouseIncomePie from "./components/HouseIncomePie";
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -45,12 +46,8 @@ async function Dashboard() {
         />
       </div>
       <div className="flex mt-6 flex-col md:flex-row">
-        <div className="w-full md:w-3/4">
-          <ReportTable />
-        </div>
-        <div className="ml-0 md:ml-6 w-full md:w-1/4">
-          <h1 className="bg-red-500">some chart data</h1>
-        </div>
+        <ReportTable />
+        <HouseIncomePie />
       </div>
     </div>
   );
