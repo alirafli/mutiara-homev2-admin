@@ -6,6 +6,7 @@ import Topbar from "@/components/ui/topbar";
 import { getUserById } from "@/lib/actions";
 import Sidebar from "@/components/ui/sidebar";
 import { ReduxProviders } from "@/lib/redux/provider";
+import LogoutButton from "@/components/ui/logoutButton";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -33,7 +34,7 @@ export default async function RootLayout({
             disableTransitionOnChange
           >
             <div className="flex w-screen">
-              <Sidebar />
+              <Sidebar logout={<LogoutButton />} />
               <div className="w-full">
                 <Topbar user={user?.[0]} />
                 {children}

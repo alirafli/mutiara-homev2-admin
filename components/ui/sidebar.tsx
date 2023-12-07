@@ -8,7 +8,10 @@ import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
 import { toggleCollapsedSideNav } from "@/lib/redux/features/settingsSlice";
 import useWindowSize from "@/hooks/useWindowsSize";
 
-function Sidebar() {
+interface SidebarProps {
+  logout: React.JSX.Element;
+}
+function Sidebar({ logout }: SidebarProps) {
   const pathname = usePathname();
   const { navCollapsed } = useAppSelector((state) => state.settingsReducer);
   const dispatch = useAppDispatch();
@@ -64,6 +67,8 @@ function Sidebar() {
           </Link>
         ))}
       </div>
+
+      <div className="mt-auto mb-24">{logout}</div>
     </div>
   );
 }

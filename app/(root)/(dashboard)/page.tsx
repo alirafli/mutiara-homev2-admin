@@ -2,8 +2,6 @@ import React from "react";
 import { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { readUserSession } from "@/lib/actions";
-import { createSupabaseServerClient } from "@/lib/supabase/server";
-import { Button } from "@/components/ui/button";
 import MoneyInformationCard from "./components/MoneyInformationCard";
 import { getAllFinanceReport } from "./actions";
 
@@ -24,13 +22,6 @@ async function Dashboard() {
     );
   };
 
-  const logout = async () => {
-    "use server";
-    const supabse = await createSupabaseServerClient();
-    await supabse.auth.signOut();
-    redirect("/sign-in");
-  };
-
   if (!data.session) {
     return redirect("/sign-in");
   }
@@ -48,12 +39,6 @@ async function Dashboard() {
           description="this will be the month desc"
           income={100000000}
         />
-      </div>
-
-      <div>
-        <form action={logout}>
-          <Button>SignOut</Button>
-        </form>
       </div>
     </div>
   );
