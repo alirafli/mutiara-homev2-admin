@@ -5,8 +5,8 @@ export default function useWindowSize() {
     width: number;
     height: number;
   }>({
-    width: window.innerWidth,
-    height: window.innerHeight,
+    width: 900,
+    height: 0,
   });
 
   useEffect(() => {
