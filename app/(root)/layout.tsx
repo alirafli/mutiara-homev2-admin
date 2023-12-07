@@ -33,7 +33,7 @@ export default async function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <div className="flex w-screen">
+            <div className="flex">
               <Sidebar logout={<LogoutButton />} />
               <div className="w-full">
                 <Topbar user={user?.[0]} />

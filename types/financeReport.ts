@@ -1,5 +1,5 @@
 export interface ReportFinance {
-  id: string;
+  id?: string;
   nik: string;
   renter: string;
   account: string;

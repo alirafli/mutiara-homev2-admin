@@ -24,9 +24,9 @@ export default function Topbar({ user }: TopBarProps) {
 
   return (
     <div
-      className={`flex ${
+      className={`flex z-10 ${
         size.width >= 767 ? "justify-end" : "justify-between"
-      } bg-zinc-200 dark:bg-zinc-900 shadow-lg dark:shadow-lg-dark px-3 md:px-14 py-2 items-center mb-6`}
+      } bg-zinc-200 dark:bg-zinc-900 shadow-lg dark:shadow-lg-dark px-3 md:px-14 py-2 items-center mb-6 sticky top-0`}
     >
       <div className={`${size.width >= 767 ? "hidden" : "block"}`}>
         {navCollapsed ? (

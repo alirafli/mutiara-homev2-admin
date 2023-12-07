@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { readUserSession } from "@/lib/actions";
 import MoneyInformationCard from "./components/MoneyInformationCard";
 import { getAllFinanceReport } from "./actions";
+import { ReportTable } from "./components/ReportTable";
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -28,6 +29,9 @@ async function Dashboard() {
 
   return (
     <div className="px-6">
+      <h1 className="scroll-m-20 text-3xl font-bold tracking-tight lg:text-4xl mb-8">
+        Dashboard
+      </h1>
       <div className="flex gap-6 flex-col md:flex-row items-center md:items-start">
         <MoneyInformationCard
           title="Total Penghasilan"
@@ -36,9 +40,17 @@ async function Dashboard() {
         {/* TODO: will update this card later */}
         <MoneyInformationCard
           title="Tagihan Penyewa"
-          description="this will be the month desc"
+          description="this will be the desc"
           income={100000000}
         />
+      </div>
+      <div className="flex mt-6 flex-col md:flex-row">
+        <div className="w-full md:w-3/4">
+          <ReportTable />
+        </div>
+        <div className="ml-0 md:ml-6 w-full md:w-1/4">
+          <h1 className="bg-red-500">some chart data</h1>
+        </div>
       </div>
     </div>
   );

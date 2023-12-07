@@ -20,7 +20,7 @@ function MoneyInformationCard({
   income,
 }: TotalIncomeCardProps) {
   return (
-    <Card className="w-full md:w-[350px] self-auto md:self-stretch">
+    <Card className="min-w-full md:min-w-[45%] self-auto md:self-stretch">
       <CardHeader>
         <CardTitle>{title}</CardTitle>
         <CardDescription>{description}</CardDescription>

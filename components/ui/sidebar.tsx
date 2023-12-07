@@ -42,7 +42,7 @@ function Sidebar({ logout }: SidebarProps) {
 
   return (
     <div
-      className={`flex-col bg-zinc-200 dark:bg-zinc-900 px-2 md:px-5 w-52 md:w-72 h-screen flex top-0 md:sticky ${
+      className={`flex-col bg-zinc-200 dark:bg-zinc-900 px-2 md:px-5 w-52 md:w-72 h-screen z-20 flex top-0 md:sticky ${
         navCollapsed || size.width >= 767
           ? "fixed block mt-16 md:mt-0"
           : "hidden"
