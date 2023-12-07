@@ -40,7 +40,9 @@ function Sidebar() {
   return (
     <div
       className={`flex-col bg-zinc-200 dark:bg-zinc-900 px-2 md:px-5 w-52 md:w-72 h-screen flex top-0 md:sticky ${
-        navCollapsed ? "fixed block mt-16 md:mt-0" : "hidden"
+        navCollapsed || size.width >= 767
+          ? "fixed block mt-16 md:mt-0"
+          : "hidden"
       }`}
     >
       <div className="w-14 mx-auto mt-3 mb-10 ">

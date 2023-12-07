@@ -7,6 +7,7 @@ import { User } from "@/types/user";
 import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
 import { toggleCollapsedSideNav } from "@/lib/redux/features/settingsSlice";
 import { IoClose } from "react-icons/io5";
+import useWindowSize from "@/hooks/useWindowsSize";
 
 interface TopBarProps {
   user?: User;
@@ -14,6 +15,7 @@ interface TopBarProps {
 
 export default function Topbar({ user }: TopBarProps) {
   const dispatch = useAppDispatch();
+  const size = useWindowSize();
 
   const { navCollapsed } = useAppSelector((state) => state.settingsReducer);
   const handleToggleSidebar = () => {
@@ -21,20 +23,26 @@ export default function Topbar({ user }: TopBarProps) {
   };
 
   return (
-    <div className="flex justify-between bg-zinc-200 dark:bg-zinc-900 shadow-lg dark:shadow-lg-dark px-3 md:px-14 py-2 items-center mb-6">
-      {navCollapsed ? (
-        <IoClose
-          size={20}
-          className="cursor-pointer"
-          onClick={handleToggleSidebar}
-        />
-      ) : (
-        <RxHamburgerMenu
-          size={20}
-          className="cursor-pointer"
-          onClick={handleToggleSidebar}
-        />
-      )}
+    <div
+      className={`flex ${
+        size.width >= 767 ? "justify-end" : "justify-between"
+      } bg-zinc-200 dark:bg-zinc-900 shadow-lg dark:shadow-lg-dark px-3 md:px-14 py-2 items-center mb-6`}
+    >
+      <div className={`${size.width >= 767 ? "hidden" : "block"}`}>
+        {navCollapsed ? (
+          <IoClose
+            size={20}
+            className="cursor-pointer"
+            onClick={handleToggleSidebar}
+          />
+        ) : (
+          <RxHamburgerMenu
+            size={20}
+            className="cursor-pointer"
+            onClick={handleToggleSidebar}
+          />
+        )}
+      </div>
 
       <div className="flex items-center gap-8">
         <div>
