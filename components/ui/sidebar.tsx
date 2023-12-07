@@ -68,7 +68,7 @@ function Sidebar({ logout }: SidebarProps) {
         ))}
       </div>
 
-      <div className="mt-auto mb-24">{logout}</div>
+      <div className="mt-auto mb-40 md:mb-24">{logout}</div>
     </div>
   );
 }
