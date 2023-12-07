@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { readUserSession } from "@/lib/actions";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { Button } from "@/components/ui/button";
+import MoneyInformationCard from "./components/MoneyInformationCard";
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -23,8 +24,16 @@ async function Dashboard() {
   };
 
   return (
-    <div className="pl-6">
-      <h1>Dashboard</h1>
+    <div className="px-6">
+      <div className="flex gap-6 flex-col md:flex-row items-center md:items-start">
+        <MoneyInformationCard title="Total Penghasilan" income={100000000} />
+        <MoneyInformationCard
+          title="Tagihan Penyewa"
+          description="this will be the month desc"
+          income={100000000}
+        />
+      </div>
+
       <div>
         <form action={logout}>
           <Button>SignOut</Button>
