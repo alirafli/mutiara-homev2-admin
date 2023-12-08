@@ -6,6 +6,8 @@ import {
   getCoreRowModel,
   getPaginationRowModel,
   useReactTable,
+  getFilteredRowModel,
+  ColumnFiltersState,
 } from "@tanstack/react-table";
 
 import { Button } from "@/components/ui/button";
@@ -21,6 +23,7 @@ import {
 import { ReportFinance } from "@/types/financeReport";
 import { columns } from "./columns";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
 
 // const data: ReportFinance[] = [
 //   {
@@ -150,11 +153,20 @@ interface ReportTableProps {
 }
 
 export function ReportTable({ report }: ReportTableProps) {
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
+    []
+  );
+
   const table = useReactTable({
     data: report,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    onColumnFiltersChange: setColumnFilters,
+    state: {
+      columnFilters,
+    },
     initialState: {
       pagination: {
         pageSize: 7,
@@ -168,6 +180,14 @@ export function ReportTable({ report }: ReportTableProps) {
         <CardTitle>Laporan Keuangan</CardTitle>
       </CardHeader>
       <CardContent>
+        <Input
+          placeholder="Filter Penyewa"
+          value={(table.getColumn("renter")?.getFilterValue() as string) ?? ""}
+          onChange={(event) =>
+            table.getColumn("renter")?.setFilterValue(event.target.value)
+          }
+          className="max-w-xs mb-6"
+        />
         <div className="rounded-md border">
           <Table>
             <TableHeader>
