@@ -35,7 +35,7 @@ export default async function RootLayout({
           >
             <div className="flex">
               <Sidebar logout={<LogoutButton />} />
-              <div className="w-full">
+              <div className="w-full mb-6">
                 <Topbar user={user?.[0]} />
                 {children}
               </div>

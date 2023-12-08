@@ -3,7 +3,7 @@ export interface ReportFinance {
   nik: string;
   renter: string;
   account: string;
-  house: string;
+  house_name: string;
   amount: number;
   created_at: string;
   note: string;
