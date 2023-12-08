@@ -25,6 +25,7 @@ import { columns } from "./columns";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import AddDataModal from "@/components/ui/addDataModal";
+import AddReportForm from "../AddReportForm";
 
 // const data: ReportFinance[] = [
 //   {
@@ -241,11 +242,8 @@ export function ReportTable({ report }: ReportTableProps) {
         </div>
 
         <div className="flex items-center justify-end space-x-2 py-4">
-          <AddDataModal
-            triggerTitle="Tambah Data"
-            title="Tambah Data Pembukuan"
-          >
-            test duar
+          <AddDataModal triggerTitle="Tambah Data" title="Tambah Pembukuan">
+            <AddReportForm />
           </AddDataModal>
           <div className="space-x-2">
             <Button

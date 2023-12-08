@@ -6,7 +6,6 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-  DialogFooter,
 } from "@/components/ui/dialog";
 
 interface AddDataModalProps {
@@ -24,14 +23,11 @@ function AddDataModal({ triggerTitle, title, children }: AddDataModalProps) {
         </Button>
       </DialogTrigger>
 
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="max-w-[100vh-100px] md:max-w-[600px] h-[calc(100vh-100px)] md:h-auto overflow-scroll md:overflow-hidden">
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
         </DialogHeader>
         {children}
-        <DialogFooter>
-          <Button type="submit">Save changes</Button>
-        </DialogFooter>
       </DialogContent>
     </Dialog>
   );
