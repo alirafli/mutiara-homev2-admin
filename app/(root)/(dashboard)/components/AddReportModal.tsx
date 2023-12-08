@@ -2,7 +2,6 @@ import React from "react";
 import {
   Sheet,
   SheetContent,
-  SheetDescription,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
@@ -30,7 +29,7 @@ function AddReportModal({
             <SheetTitle>{title}</SheetTitle>
             {status && status}
           </div>
-          <SheetDescription>{children}</SheetDescription>
+          <div>{children}</div>
         </SheetHeader>
       </SheetContent>
     </Sheet>
