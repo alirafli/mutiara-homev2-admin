@@ -24,6 +24,7 @@ import { ReportFinance } from "@/types/financeReport";
 import { columns } from "./columns";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import AddDataModal from "@/components/ui/addDataModal";
 
 // const data: ReportFinance[] = [
 //   {
@@ -240,9 +241,12 @@ export function ReportTable({ report }: ReportTableProps) {
         </div>
 
         <div className="flex items-center justify-end space-x-2 py-4">
-          <Button size="sm" className="mr-auto">
-            Tambah Data
-          </Button>
+          <AddDataModal
+            triggerTitle="Tambah Data"
+            title="Tambah Data Pembukuan"
+          >
+            test duar
+          </AddDataModal>
           <div className="space-x-2">
             <Button
               variant="outline"

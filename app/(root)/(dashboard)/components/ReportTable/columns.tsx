@@ -14,7 +14,7 @@ import { formatDate } from "@/utils/DateFormatter";
 import thousandAndDecimalSeparator from "@/utils/NumberFormatter";
 import { ColumnDef } from "@tanstack/react-table";
 import { MoreHorizontal } from "lucide-react";
-import AddReportModal from "../AddReportModal";
+import ActionDataModal from "@/components/ui/actionDataModal";
 
 const ReportContent = (reportData: ReportFinance) => {
   return [
@@ -85,8 +85,8 @@ export const columns: ColumnDef<ReportFinance>[] = [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <div className="flex flex-col pl-2">
-              <AddReportModal
-                trigger={<div>detail</div>}
+              <ActionDataModal
+                trigger="Detail"
                 title={`catatan - ${report.id?.slice(0, 5)}`}
                 status={
                   <Button disabled variant="outline">
@@ -102,10 +102,10 @@ export const columns: ColumnDef<ReportFinance>[] = [
                     <h2>{data.value}</h2>
                   </div>
                 ))}
-              </AddReportModal>
+              </ActionDataModal>
 
-              <AddReportModal
-                trigger={<div>Update</div>}
+              <ActionDataModal
+                trigger="Update"
                 title={`catatan - ${report.id?.slice(0, 5)}`}
                 status={
                   <Button disabled variant="outline">
@@ -114,7 +114,7 @@ export const columns: ColumnDef<ReportFinance>[] = [
                 }
               >
                 <h1>{report.renter}</h1>
-              </AddReportModal>
+              </ActionDataModal>
             </div>
 
             <DropdownMenuSeparator />

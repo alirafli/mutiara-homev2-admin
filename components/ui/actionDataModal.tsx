@@ -8,13 +8,13 @@ import {
 } from "@/components/ui/sheet";
 
 interface AddReportModalProps {
-  trigger: React.JSX.Element;
+  trigger: string;
   title?: string;
   status?: React.ReactNode;
   children: React.ReactNode;
 }
 
-function AddReportModal({
+function ActionDataModal({
   trigger,
   title = "yout title",
   status,
@@ -22,7 +22,7 @@ function AddReportModal({
 }: AddReportModalProps) {
   return (
     <Sheet>
-      <SheetTrigger className="mr-auto">{trigger}</SheetTrigger>
+      <SheetTrigger className="mr-auto w-full text-left">{trigger}</SheetTrigger>
       <SheetContent>
         <SheetHeader>
           <div className="flex items-center gap-6">
@@ -36,4 +36,4 @@ function AddReportModal({
   );
 }
 
-export default AddReportModal;
+export default ActionDataModal;
