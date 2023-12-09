@@ -12,6 +12,7 @@ export async function readUserSession() {
 }
 
 export async function getUserById(): Promise<PostgrestSingleResponse<User[]>> {
+  noStore();
   const { data } = await readUserSession();
 
   const supabase = await createSupabaseServerClient();

@@ -20,7 +20,7 @@ const ReportContent = (reportData: ReportFinance) => {
   return [
     {
       title: "Tanggal Dibuat",
-      value: formatDate(reportData.created_at, "long"),
+      value: formatDate(reportData.created_at.toString(), "long"),
     },
     { title: "Nama Penyewa", value: reportData.renter },
     { title: "Kategori", value: reportData.category },
@@ -33,6 +33,21 @@ const ReportContent = (reportData: ReportFinance) => {
     },
     { title: "Catatan Tambahan", value: reportData.note },
   ];
+};
+
+const RenderCaterogy = (value: string) => {
+  const isIncomeVariant = value.toLocaleLowerCase() === "pemasukan";
+  return (
+    <div
+      className={` ${
+        isIncomeVariant
+          ? "bg-green-300 dark:bg-green-700"
+          : "bg-red-300 dark:bg-red-700"
+      } text-center rounded-full px-1 capitalize`}
+    >
+      {value}
+    </div>
+  );
 };
 
 export const columns: ColumnDef<ReportFinance>[] = [
@@ -51,6 +66,9 @@ export const columns: ColumnDef<ReportFinance>[] = [
   {
     accessorKey: "category",
     header: "Kategori",
+    cell: ({ getValue }) => {
+      return RenderCaterogy(getValue() as string);
+    },
   },
   {
     accessorKey: "type",

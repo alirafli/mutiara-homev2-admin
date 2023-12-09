@@ -1,13 +1,13 @@
 import { z } from "zod";
 
 export const formSchema = z.object({
-  date: z.date({
+  created_at: z.date({
     required_error: "wajib di isi!",
   }),
   house_name: z.string({
     required_error: "wajib di isi!",
   }),
-  renter_name: z.string({
+  renter: z.string({
     required_error: "wajib di isi!",
   }),
   amount: z.string({
@@ -22,7 +22,5 @@ export const formSchema = z.object({
   account: z.string({
     required_error: "wajib di isi!",
   }),
-  note: z.string({
-    required_error: "wajib di isi!",
-  }),
+  note: z.string(),
 });

@@ -7,6 +7,7 @@ import { getUserById } from "@/lib/actions";
 import Sidebar from "@/components/ui/sidebar";
 import { ReduxProviders } from "@/lib/redux/provider";
 import LogoutButton from "@/components/ui/logoutButton";
+import { Toaster } from "@/components/ui/toaster";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -38,6 +39,7 @@ export default async function RootLayout({
               <div className="w-full mb-6">
                 <Topbar user={user?.[0]} />
                 {children}
+                <Toaster />
               </div>
             </div>
           </ThemeProvider>

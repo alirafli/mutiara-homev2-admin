@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useTransition } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
@@ -15,28 +15,56 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { DialogClose } from "@radix-ui/react-dialog";
+import { AiOutlineLoading } from "react-icons/ai";
+
 import { DialogFooter } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
 
 import { formSchema } from "./formSchema";
 import DropDownInput from "./DropDownInput";
 import CalendarSelect from "./CalendarSelect";
+import { createReport } from "../../actions";
+import { toast } from "@/components/ui/use-toast";
 
-function AddReportForm() {
+interface AddReportFormProps {
+  handleModalOpen: (value: boolean) => void;
+}
+
+function AddReportForm({ handleModalOpen }: AddReportFormProps) {
+  const [isPending, startTransition] = useTransition();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      date: new Date(Date.now()),
+      created_at: new Date(Date.now()),
+      note: "",
     },
   });
 
-  // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    // eslint-disable-next-line no-console
-    console.log(values);
+    handleModalOpen(false);
+    startTransition(async () => {
+      const payload = {
+        ...values,
+        amount: Number(values.amount),
+      };
+      const result = await createReport(payload);
+
+      const { error } = JSON.parse(result);
+
+      if (error && error.message) {
+        toast({
+          variant: "destructive",
+          title: "gagal menambahkan data report!",
+          description: `${error.status}: ${error.message}`,
+        });
+      } else {
+        toast({
+          title: "Pencatatan berhasil ditambahkan!",
+        });
+        form.reset();
+      }
+    });
   }
 
   return (
@@ -45,7 +73,7 @@ function AddReportForm() {
         <div className="flex gap-4 flex-col md:flex-row">
           <FormField
             control={form.control}
-            name="date"
+            name="created_at"
             render={({ field }) => <CalendarSelect field={field} />}
           />
 
@@ -67,7 +95,7 @@ function AddReportForm() {
         <div className="flex gap-4 flex-col md:flex-row">
           <FormField
             control={form.control}
-            name="renter_name"
+            name="renter"
             render={({ field }) => (
               <FormItem className="w-full">
                 <FormLabel>Nama Penyewa</FormLabel>
@@ -157,13 +185,13 @@ function AddReportForm() {
         </div>
 
         <DialogFooter className="gap-6">
-          <Button type="submit">Submit</Button>
-
-          <DialogClose asChild>
-            <Button type="button" variant="secondary">
-              Close
-            </Button>
-          </DialogClose>
+          <Button type="submit">
+            {isPending ? (
+              <AiOutlineLoading className="animate-spin" />
+            ) : (
+              "Tambah"
+            )}
+          </Button>
         </DialogFooter>
       </form>
     </Form>

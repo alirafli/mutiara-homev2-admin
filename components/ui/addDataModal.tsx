@@ -12,13 +12,25 @@ interface AddDataModalProps {
   triggerTitle: string;
   title: string;
   children: React.ReactNode;
+  modal?: boolean;
+  handleModalOpen: (value: boolean) => void;
 }
 
-function AddDataModal({ triggerTitle, title, children }: AddDataModalProps) {
+function AddDataModal({
+  triggerTitle,
+  title,
+  children,
+  modal = false,
+  handleModalOpen,
+}: AddDataModalProps) {
   return (
-    <Dialog>
+    <Dialog open={modal} onOpenChange={() => handleModalOpen(!modal)}>
       <DialogTrigger asChild>
-        <Button size="sm" className="mr-auto">
+        <Button
+          size="sm"
+          className="mr-auto"
+          onClick={() => handleModalOpen(true)}
+        >
           {triggerTitle}
         </Button>
       </DialogTrigger>

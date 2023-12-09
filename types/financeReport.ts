@@ -1,11 +1,10 @@
 export interface ReportFinance {
   id?: string;
-  nik: string;
   renter: string;
   account: string;
   house_name: string;
   amount: number;
-  created_at: string;
+  created_at: Date;
   note: string;
   category: string;
   type: string;

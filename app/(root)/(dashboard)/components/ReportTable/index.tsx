@@ -26,6 +26,14 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import AddDataModal from "@/components/ui/addDataModal";
 import AddReportForm from "../AddReportForm";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 // const data: ReportFinance[] = [
 //   {
@@ -155,10 +163,14 @@ interface ReportTableProps {
 }
 
 export function ReportTable({ report }: ReportTableProps) {
+  const [modal, setModal] = React.useState(false);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   );
 
+  const handleModalOpen = (value: boolean) => {
+    setModal(value);
+  };
   const table = useReactTable({
     data: report,
     columns,
@@ -171,7 +183,7 @@ export function ReportTable({ report }: ReportTableProps) {
     },
     initialState: {
       pagination: {
-        pageSize: 7,
+        pageSize: 6,
       },
     },
   });
@@ -182,15 +194,41 @@ export function ReportTable({ report }: ReportTableProps) {
         <CardTitle>Laporan Keuangan</CardTitle>
       </CardHeader>
       <CardContent>
-        <Input
-          placeholder="Filter Penyewa"
-          value={(table.getColumn("renter")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("renter")?.setFilterValue(event.target.value)
-          }
-          className="max-w-xs mb-6"
-        />
-        <div className="rounded-md border">
+        <div className="flex gap-6">
+          <Input
+            placeholder="Filter Penyewa"
+            value={
+              (table.getColumn("renter")?.getFilterValue() as string) ?? ""
+            }
+            onChange={(event) =>
+              table.getColumn("renter")?.setFilterValue(event.target.value)
+            }
+            className="max-w-xs mb-6"
+          />
+
+          <Select
+            defaultValue={
+              (table.getColumn("type")?.getFilterValue() as string) ?? ""
+            }
+            onValueChange={(event) =>
+              table
+                .getColumn("type")
+                ?.setFilterValue(event === "notall" ? "" : event)
+            }
+          >
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Filter Jenis" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectItem value="notall">Semua</SelectItem>
+                <SelectItem value="lunas">Lunas</SelectItem>
+                <SelectItem value="cicilan">Cicilan</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+        </div>
+        <div className="rounded-md border h-[490px] md:h-[440px]">
           <Table>
             <TableHeader>
               {table.getHeaderGroups().map((headerGroup) => (
@@ -242,9 +280,15 @@ export function ReportTable({ report }: ReportTableProps) {
         </div>
 
         <div className="flex items-center justify-end space-x-2 py-4">
-          <AddDataModal triggerTitle="Tambah Data" title="Tambah Pembukuan">
-            <AddReportForm />
+          <AddDataModal
+            triggerTitle="Tambah Data"
+            title="Tambah Pembukuan"
+            modal={modal}
+            handleModalOpen={handleModalOpen}
+          >
+            <AddReportForm handleModalOpen={handleModalOpen} />
           </AddDataModal>
+
           <div className="space-x-2">
             <Button
               variant="outline"
