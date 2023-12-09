@@ -185,7 +185,7 @@ function AddReportForm({ handleModalOpen }: AddReportFormProps) {
         </div>
 
         <DialogFooter className="gap-6">
-          <Button type="submit">
+          <Button type="submit" disabled={isPending}>
             {isPending ? (
               <AiOutlineLoading className="animate-spin" />
             ) : (

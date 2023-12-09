@@ -31,6 +31,7 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
+  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
@@ -221,6 +222,7 @@ export function ReportTable({ report }: ReportTableProps) {
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
+                <SelectLabel>Jenis</SelectLabel>
                 <SelectItem value="notall">Semua</SelectItem>
                 <SelectItem value="lunas">Lunas</SelectItem>
                 <SelectItem value="cicilan">Cicilan</SelectItem>
