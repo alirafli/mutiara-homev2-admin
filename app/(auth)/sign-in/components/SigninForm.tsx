@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useTransition } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { signInWithEmailAndPassword } from "../actions";
@@ -19,6 +19,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { AiOutlineLoading } from "react-icons/ai";
 
 const formSchema = z.object({
   email: z
@@ -33,6 +34,7 @@ const formSchema = z.object({
 
 function SigninForm() {
   const { toast } = useToast();
+  const [isPending, startTransition] = useTransition();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -42,16 +44,19 @@ function SigninForm() {
     },
   });
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
-    const result = await signInWithEmailAndPassword(values);
-    const { error } = JSON.parse(result);
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    startTransition(async () => {
+      const result = await signInWithEmailAndPassword(values);
+      const { error } = JSON.parse(result);
 
-    if (error && error.message)
-      toast({
-        variant: "destructive",
-        title: "Fail to Login",
-        description: `${error.status}: ${error.message}`,
-      });
+      if (error && error.message)
+        toast({
+          variant: "destructive",
+          title: "Fail to Login",
+          description: `${error.status}: ${error.message}`,
+        });
+      form.reset();
+    });
   }
 
   return (
@@ -94,7 +99,13 @@ function SigninForm() {
                 </FormItem>
               )}
             />
-            <Button type="submit">Masuk</Button>
+            <Button type="submit" className="w-full" disabled={isPending}>
+              {isPending ? (
+                <AiOutlineLoading className="animate-spin" />
+              ) : (
+                "Masuk"
+              )}
+            </Button>
           </form>
         </Form>
       </div>

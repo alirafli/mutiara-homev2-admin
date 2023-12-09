@@ -12,7 +12,7 @@ function LogoutButton() {
   };
   return (
     <form action={logout}>
-      <Button className="w-full">SignOut</Button>
+      <Button className="w-full">Keluar</Button>
     </form>
   );
 }
