@@ -15,6 +15,8 @@ import thousandAndDecimalSeparator from "@/utils/NumberFormatter";
 import { ColumnDef } from "@tanstack/react-table";
 import { MoreHorizontal } from "lucide-react";
 import ActionDataModal from "@/components/ui/actionDataModal";
+import { deleteReportById } from "../../actions";
+import { toast } from "@/components/ui/use-toast";
 
 const ReportContent = (reportData: ReportFinance) => {
   return [
@@ -92,6 +94,18 @@ export const columns: ColumnDef<ReportFinance>[] = [
     enableHiding: false,
     cell: ({ row }) => {
       const report = row.original;
+      const deleteReport = async () => {
+        const result = await deleteReportById(report.id);
+        if (result.error && result.error.message) {
+          toast({
+            title: `Fail to delete ${report.id?.slice(0, 5)}`,
+          });
+        } else {
+          toast({
+            title: `Successfully delete ${report.id?.slice(0, 5)}`,
+          });
+        }
+      };
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -136,8 +150,15 @@ export const columns: ColumnDef<ReportFinance>[] = [
             </div>
 
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="text-red-800 dark:text-red-00 font-medium">
-              Delete {report.id?.slice(0, 4)}
+            <DropdownMenuItem>
+              <form action={deleteReport}>
+                <Button
+                  variant="ghost"
+                  className="text-red-800 dark:text-red-700 m-0 p-0 w-fit h-fit"
+                >
+                  Delete {report.id?.slice(0, 4)}
+                </Button>
+              </form>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

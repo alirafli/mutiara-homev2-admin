@@ -20,3 +20,19 @@ export async function createReport(data: ReportFinance) {
 
   return JSON.stringify(result);
 }
+
+export async function deleteReportById(id?: string) {
+  const supabase = await createSupabaseServerClient();
+  try {
+    const { data, error } = await supabase
+      .from("report_finance")
+      .delete()
+      .eq("id", id);
+
+    revalidatePath("/");
+
+    return { data, error };
+  } catch (error) {
+    return { data: null, error: error as Error };
+  }
+}
