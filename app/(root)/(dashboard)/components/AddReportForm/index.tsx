@@ -21,13 +21,18 @@ import { DialogFooter } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
 
 import { formSchema } from "./formSchema";
-import DropDownInput from "./DropDownInput";
 import CalendarSelect from "./CalendarSelect";
 import { createReport } from "../../actions";
 import { toast } from "@/components/ui/use-toast";
 
 import DropDownComboBox from "./DropDownComboBox";
-import { houseName } from "../../data";
+import {
+  accountData,
+  categoryData,
+  houseNameData,
+  paymentType,
+  renterNameData,
+} from "../../data";
 
 interface AddReportFormProps {
   handleModalOpen: (value: boolean) => void;
@@ -73,7 +78,7 @@ function AddReportForm({ handleModalOpen }: AddReportFormProps) {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-        <div className="flex gap-4 flex-col md:flex-row">
+        <div className="flex gap-4 flex-col md:flex-row items-start">
           <FormField
             control={form.control}
             name="created_at"
@@ -86,7 +91,7 @@ function AddReportForm({ handleModalOpen }: AddReportFormProps) {
             render={({ field }) => (
               <DropDownComboBox
                 field={field}
-                datas={houseName}
+                datas={houseNameData}
                 form={form}
                 keyLabel={"house_name"}
                 placeHolder="Pilih rumah"
@@ -101,14 +106,14 @@ function AddReportForm({ handleModalOpen }: AddReportFormProps) {
             control={form.control}
             name="renter"
             render={({ field }) => (
-              <FormItem className="w-full">
-                <FormLabel>Nama Penyewa</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-
-                <FormMessage />
-              </FormItem>
+              <DropDownComboBox
+                field={field}
+                datas={renterNameData}
+                form={form}
+                keyLabel="renter"
+                placeHolder="Pilih penyewa"
+                title="Nama Penyewa"
+              />
             )}
           />
 
@@ -133,13 +138,13 @@ function AddReportForm({ handleModalOpen }: AddReportFormProps) {
               control={form.control}
               name="category"
               render={({ field }) => (
-                <DropDownInput
+                <DropDownComboBox
                   field={field}
-                  label="Kategori"
-                  selectItem={[
-                    { value: "pemasukan", label: "Pemasukan" },
-                    { value: "pengeluaran", label: "Pengeluaran" },
-                  ]}
+                  datas={categoryData}
+                  form={form}
+                  keyLabel="category"
+                  placeHolder="Pilih kategori"
+                  title="Kategori"
                 />
               )}
             />
@@ -147,13 +152,13 @@ function AddReportForm({ handleModalOpen }: AddReportFormProps) {
               control={form.control}
               name="type"
               render={({ field }) => (
-                <DropDownInput
+                <DropDownComboBox
                   field={field}
-                  label="Jenis Pembayaran"
-                  selectItem={[
-                    { value: "lunas", label: "Lunas" },
-                    { value: "cicilan", label: "Cicilan" },
-                  ]}
+                  datas={paymentType}
+                  form={form}
+                  keyLabel="type"
+                  placeHolder="Pilih tipe"
+                  title="Tipe Pembayaran"
                 />
               )}
             />
@@ -161,13 +166,13 @@ function AddReportForm({ handleModalOpen }: AddReportFormProps) {
               control={form.control}
               name="account"
               render={({ field }) => (
-                <DropDownInput
+                <DropDownComboBox
                   field={field}
-                  label="Akun"
-                  selectItem={[
-                    { value: "bca01", label: "BCA 01" },
-                    { value: "tunai", label: "Tunai" },
-                  ]}
+                  datas={accountData}
+                  form={form}
+                  keyLabel="account"
+                  placeHolder="Pilih akun"
+                  title="Akun"
                 />
               )}
             />

@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import {
   Command,
@@ -39,10 +41,12 @@ function DropDownComboBox({
   title,
   keyLabel,
 }: DropDownComboBoxProps) {
+  const [open, setOpen] = React.useState(false);
+
   return (
     <FormItem className="flex flex-col w-full">
       <FormLabel>{title}</FormLabel>
-      <Popover>
+      <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <FormControl>
             <Button
@@ -67,10 +71,12 @@ function DropDownComboBox({
             <CommandGroup>
               {datas.map((data) => (
                 <CommandItem
+                  className="cursor-pointer"
                   value={data.label}
                   key={data.value}
                   onSelect={() => {
                     form.setValue(keyLabel, data.value);
+                    setOpen(false);
                   }}
                 >
                   {data.label}

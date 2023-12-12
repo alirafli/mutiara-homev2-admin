@@ -17,6 +17,8 @@ import { MoreHorizontal } from "lucide-react";
 import ActionDataModal from "@/components/ui/actionDataModal";
 import { deleteReportById } from "../../actions";
 import { toast } from "@/components/ui/use-toast";
+import UpdateReportModal from "../UpdateReportModal";
+import { Badge } from "@/components/ui/badge";
 
 const ReportContent = (reportData: ReportFinance) => {
   return [
@@ -120,11 +122,7 @@ export const columns: ColumnDef<ReportFinance>[] = [
               <ActionDataModal
                 trigger="Detail"
                 title={`catatan - ${report.id?.slice(0, 5)}`}
-                status={
-                  <Button disabled variant="outline">
-                    View
-                  </Button>
-                }
+                status={<Badge>View</Badge>}
               >
                 {ReportContent(report).map((data) => (
                   <div key={data.title} className="mb-4">
@@ -139,13 +137,9 @@ export const columns: ColumnDef<ReportFinance>[] = [
               <ActionDataModal
                 trigger="Update"
                 title={`catatan - ${report.id?.slice(0, 5)}`}
-                status={
-                  <Button disabled variant="outline">
-                    Edit
-                  </Button>
-                }
+                status={<Badge>Edit</Badge>}
               >
-                <h1>{report.renter}</h1>
+                <UpdateReportModal report={ReportContent(report)} />
               </ActionDataModal>
             </div>
 
