@@ -22,7 +22,9 @@ function ActionDataModal({
 }: AddReportModalProps) {
   return (
     <Sheet>
-      <SheetTrigger className="mr-auto w-full text-left">{trigger}</SheetTrigger>
+      <SheetTrigger className="mr-auto w-full text-left">
+        {trigger}
+      </SheetTrigger>
       <SheetContent>
         <SheetHeader>
           <div className="flex items-center gap-6">

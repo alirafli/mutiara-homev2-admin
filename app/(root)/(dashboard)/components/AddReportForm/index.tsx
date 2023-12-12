@@ -26,6 +26,9 @@ import CalendarSelect from "./CalendarSelect";
 import { createReport } from "../../actions";
 import { toast } from "@/components/ui/use-toast";
 
+import DropDownComboBox from "./DropDownComboBox";
+import { houseName } from "../../data";
+
 interface AddReportFormProps {
   handleModalOpen: (value: boolean) => void;
 }
@@ -81,13 +84,14 @@ function AddReportForm({ handleModalOpen }: AddReportFormProps) {
             control={form.control}
             name="house_name"
             render={({ field }) => (
-              <FormItem className="w-full">
-                <FormLabel>Nama Rumah</FormLabel>
-                <FormControl>
-                  <Input {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
+              <DropDownComboBox
+                field={field}
+                datas={houseName}
+                form={form}
+                keyLabel={"house_name"}
+                placeHolder="Pilih rumah"
+                title="Nama Rumah"
+              />
             )}
           />
         </div>
