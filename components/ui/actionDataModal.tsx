@@ -25,7 +25,7 @@ function ActionDataModal({
       <SheetTrigger className="mr-auto w-full text-left">
         {trigger}
       </SheetTrigger>
-      <SheetContent>
+      <SheetContent className="overflow-y-scroll">
         <SheetHeader>
           <div className="flex items-center gap-6">
             <SheetTitle>{title}</SheetTitle>

@@ -24,7 +24,7 @@ const ReportContent = (reportData: ReportFinance) => {
   return [
     {
       title: "Tanggal Dibuat",
-      value: formatDate(reportData.created_at.toString(), "long"),
+      value: reportData.created_at,
     },
     { title: "Nama Penyewa", value: reportData.renter },
     { title: "Kategori", value: reportData.category },
@@ -33,7 +33,7 @@ const ReportContent = (reportData: ReportFinance) => {
     { title: "Nama Rumah", value: reportData.house_name },
     {
       title: "Nominal Pembayaran",
-      value: `Rp${thousandAndDecimalSeparator(reportData.amount)}`,
+      value: reportData.amount,
     },
     { title: "Catatan Tambahan", value: reportData.note },
   ];
@@ -129,7 +129,13 @@ export const columns: ColumnDef<ReportFinance>[] = [
                     <h1 className="scroll-m-20 border-b-2 text-lg font-medium tracking-tight first:mt-0 mb-2">
                       {data.title}
                     </h1>
-                    <h2>{data.value}</h2>
+                    <h2>
+                      {data.title === "Tanggal Dibuat"
+                        ? formatDate(data.value.toString(), "long")
+                        : data.title === "Nominal Pembayaran"
+                        ? `Rp${thousandAndDecimalSeparator(Number(data.value))}`
+                        : data.value.toString()}
+                    </h2>
                   </div>
                 ))}
               </ActionDataModal>
@@ -139,7 +145,10 @@ export const columns: ColumnDef<ReportFinance>[] = [
                 title={`catatan - ${report.id?.slice(0, 5)}`}
                 status={<Badge>Edit</Badge>}
               >
-                <UpdateReportModal report={ReportContent(report)} />
+                <UpdateReportModal
+                  report={ReportContent(report)}
+                  id={report.id}
+                />
               </ActionDataModal>
             </div>
 
