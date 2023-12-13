@@ -61,6 +61,8 @@ export async function updateReportById(
       .eq("id", id)
       .select();
 
+    revalidatePath("/");
+
     return { data, error };
   } catch (error) {
     return { data: null, error: error as Error };
