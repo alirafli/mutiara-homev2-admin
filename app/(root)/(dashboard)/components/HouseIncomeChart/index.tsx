@@ -29,7 +29,7 @@ function HouseIncomePie() {
 
       <CardContent>
         <div className="h-80 w-full">
-          <Pie data={data} />
+          <Pie data={data} className="mx-auto"/>
         </div>
       </CardContent>
     </Card>
