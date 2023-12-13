@@ -1,3 +1,4 @@
+import React from "react";
 import {
   Card,
   CardContent,
@@ -6,7 +7,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import thousandAndDecimalSeparator from "@/utils/NumberFormatter";
-import React from "react";
 
 interface TotalIncomeCardProps {
   title: string;
@@ -26,7 +26,11 @@ function MoneyInformationCard({
         <CardDescription>{description}</CardDescription>
       </CardHeader>
       <CardContent>
-        <h2 className="scroll-m-20 pb-2 text-2xl font-medium tracking-tight first:mt-0">
+        <h2
+          className={`scroll-m-20 pb-2 text-2xl font-medium tracking-tight first:mt-0 ${
+            income < 0 && "text-red-600 dark:text-red-900"
+          }`}
+        >
           Rp{thousandAndDecimalSeparator(income)}
         </h2>
       </CardContent>

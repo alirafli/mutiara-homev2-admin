@@ -18,11 +18,19 @@ async function Dashboard() {
   const { data: report } = await getAllFinanceReport();
 
   const totalIncome = () => {
-    const incomes = report?.map((e) => e.amount);
-    return incomes?.reduce(
-      (accumulator, currentValue) => accumulator + currentValue,
-      0
-    );
+    const expense =
+      report
+        ?.filter((e) => e.category === "Pengeluaran")
+        .map((e) => e.amount)
+        .reduce((accumulator, currentValue) => accumulator + currentValue, 0) ??
+      0;
+    const incomes =
+      report
+        ?.filter((e) => e.category === "Pemasukan")
+        .map((e) => e.amount)
+        .reduce((accumulator, currentValue) => accumulator + currentValue, 0) ??
+      0;
+    return incomes - expense;
   };
 
   if (!data.session) {
