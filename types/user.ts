@@ -1,13 +1,14 @@
 export interface User {
   id: string;
-  created_at: string;
+  created_at: Date;
+  name: string;
   email: string;
   password: string;
-  name: string;
-  phone_number: string;
+  nik: string;
+  phone_umber: string;
   payment_status: boolean;
   amount_remaining: number;
   role: string;
   is_active: boolean;
-  nik: string;
+  rent_time: string;
 }

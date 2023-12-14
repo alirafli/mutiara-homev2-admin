@@ -55,7 +55,7 @@ function Sidebar({ logout }: SidebarProps) {
       <div className="flex flex-col gap-3 w-full">
         {item.map((data) => (
           <Link
-            className={`px-1 py-2 transition rounded-md hover:bg-zinc-800 dark:hover:bg-zinc-700 hover:text-gray-200 flex justify-center ${
+            className={`px-1 py-2 transition rounded-md hover:bg-zinc-800 dark:hover:bg-zinc-700 hover:text-gray-200 flex justify-center md:justify-start pl-0 md:pl-4 ${
               pathname === data.href &&
               "bg-zinc-700 dark:bg-zinc-600 text-white"
             }`}
