@@ -31,10 +31,6 @@ function IncomeChart() {
       legend: {
         position: "top" as const,
       },
-      title: {
-        display: true,
-        text: "Chart.js Bar Chart",
-      },
     },
   };
 
@@ -75,7 +71,7 @@ function IncomeChart() {
 
       <CardContent>
         <div className="h-80 w-full">
-          <Bar options={options} data={data} />
+          <Bar options={options} data={data} /> 
         </div>
       </CardContent>
     </Card>
