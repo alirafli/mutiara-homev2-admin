@@ -23,6 +23,8 @@ import AddDataModal from "@/components/ui/addDataModal";
 import { Button } from "@/components/ui/button";
 import AddRenterForm from "../AddRenterForm";
 
+import Filter from "./Filter";
+
 interface RenterTableProps {
   users: User[];
 }
@@ -56,6 +58,8 @@ function RenterTable({ users }: RenterTableProps) {
 
   return (
     <div>
+      <Filter table={table} />
+
       <div className="rounded-md border">
         <Table>
           <TableHeader>

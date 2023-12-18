@@ -23,18 +23,10 @@ import {
 import { ReportFinance } from "@/types/financeReport";
 import { columns } from "./columns";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
 import AddDataModal from "@/components/ui/addDataModal";
 import AddReportForm from "../AddReportForm";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+
+import Filter from "./Filter";
 
 // const data: ReportFinance[] = [
 //   {
@@ -195,41 +187,7 @@ export function ReportTable({ report }: ReportTableProps) {
         <CardTitle>Laporan Keuangan</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className="flex gap-6">
-          <Input
-            placeholder="Filter Penyewa"
-            value={
-              (table.getColumn("renter")?.getFilterValue() as string) ?? ""
-            }
-            onChange={(event) =>
-              table.getColumn("renter")?.setFilterValue(event.target.value)
-            }
-            className="max-w-xs mb-6"
-          />
-
-          <Select
-            defaultValue={
-              (table.getColumn("type")?.getFilterValue() as string) ?? ""
-            }
-            onValueChange={(event) =>
-              table
-                .getColumn("type")
-                ?.setFilterValue(event === "notall" ? "" : event)
-            }
-          >
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Filter Jenis" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectLabel>Jenis</SelectLabel>
-                <SelectItem value="notall">Semua</SelectItem>
-                <SelectItem value="lunas">Lunas</SelectItem>
-                <SelectItem value="cicilan">Cicilan</SelectItem>
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-        </div>
+        <Filter table={table} />
         <div className="rounded-md border h-[490px] md:h-[440px]">
           <Table>
             <TableHeader>
