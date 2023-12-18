@@ -7,7 +7,13 @@ import { unstable_noStore as noStore, revalidatePath } from "next/cache";
 import { z } from "zod";
 import { formSchema } from "../components/AddReportForm/formSchema";
 
-export type UpdateReportPayloadProps = z.infer<typeof formSchema>;
+const ModifiedSchema = formSchema.omit({
+  amount: true,
+});
+
+export type UpdateReportPayloadProps = z.infer<typeof ModifiedSchema> & {
+  amount: number;
+};
 
 export async function getAllFinanceReport(): Promise<
   PostgrestSingleResponse<ReportFinance[]>
