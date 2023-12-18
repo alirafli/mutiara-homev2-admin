@@ -17,6 +17,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { MoreHorizontal } from "lucide-react";
 import { deleteRenterById } from "../../actions";
 import thousandAndDecimalSeparator from "@/utils/NumberFormatter";
+import Image from "next/image";
 
 const reportContent = (renterData: User) => {
   return [
@@ -145,6 +146,13 @@ export const columns: ColumnDef<User>[] = [
                 title={`catatan - `}
                 status={<Badge>View</Badge>}
               >
+                <Image
+                  src={`https://jhpvantiskndecjywdon.supabase.co/storage/v1/object/public/images/${renterData.id}/$${renterData.id}_profile.png?t=2023-12-18T14%3A53%3A20.550Z`}
+                  alt="image"
+                  className="bg-contain mx-auto aspect-video object-cover rounded-md mb-5"
+                  width={300}
+                  height={300}
+                />
                 {reportContent(renterData).map((data) => (
                   <div key={data.title} className="mb-4">
                     <h1 className="scroll-m-20 border-b-2 text-lg font-medium tracking-tight first:mt-0 mb-2">

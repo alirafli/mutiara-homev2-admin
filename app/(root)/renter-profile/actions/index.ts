@@ -68,3 +68,15 @@ export async function deleteRenterById(id?: string) {
     return { data: null, error: error as Error };
   }
 }
+
+export async function getUserKtpImage(userId: string) {
+  const supabase = await createSupabaseServerClient();
+
+  const { data } = supabase.storage
+    .from("images")
+    .getPublicUrl(`${userId}/${userId}_profile.png`);
+
+  revalidatePath("/renter-profile");
+
+  return { data };
+}
