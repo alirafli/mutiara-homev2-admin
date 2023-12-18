@@ -11,9 +11,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { toast } from "@/components/ui/use-toast";
 import { User } from "@/types/user";
 import { ColumnDef } from "@tanstack/react-table";
 import { MoreHorizontal } from "lucide-react";
+import { deleteRenterById } from "../../actions";
 
 const renderIsActive = (value: boolean) => {
   return (
@@ -92,6 +94,20 @@ export const columns: ColumnDef<User>[] = [
     enableHiding: false,
     cell: ({ row }) => {
       const renterData = row.original;
+      const renterIdSlice = renterData.id?.slice(0, 5);
+
+      const deleteRenter = async () => {
+        const result = await deleteRenterById(renterData.id);
+        if (result.error && result.error.message) {
+          toast({
+            title: `gagal menghapus ${renterIdSlice}`,
+          });
+        } else {
+          toast({
+            title: `berhasil menghapus ${renterIdSlice}`,
+          });
+        }
+      };
 
       return (
         <DropdownMenu>
@@ -123,12 +139,12 @@ export const columns: ColumnDef<User>[] = [
 
             <DropdownMenuSeparator />
             <DropdownMenuItem>
-              <form>
+              <form action={deleteRenter}>
                 <Button
                   variant="ghost"
                   className="text-red-800 dark:text-red-700 m-0 p-0 w-fit h-fit"
                 >
-                  Delete -
+                  Delete {renterIdSlice}
                 </Button>
               </form>
             </DropdownMenuItem>

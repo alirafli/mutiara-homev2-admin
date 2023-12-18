@@ -96,18 +96,21 @@ export const columns: ColumnDef<ReportFinance>[] = [
     enableHiding: false,
     cell: ({ row }) => {
       const report = row.original;
+      const reportIdSlice = report.id?.slice(0, 5);
+
       const deleteReport = async () => {
         const result = await deleteReportById(report.id);
         if (result.error && result.error.message) {
           toast({
-            title: `Fail to delete ${report.id?.slice(0, 5)}`,
+            title: `gagal menghapus ${reportIdSlice}`,
           });
         } else {
           toast({
-            title: `Successfully delete ${report.id?.slice(0, 5)}`,
+            title: `berhasil menghapus ${reportIdSlice}`,
           });
         }
       };
+
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -121,7 +124,7 @@ export const columns: ColumnDef<ReportFinance>[] = [
             <div className="flex flex-col pl-2">
               <ActionDataModal
                 trigger="Detail"
-                title={`catatan - ${report.id?.slice(0, 5)}`}
+                title={`catatan - ${reportIdSlice}`}
                 status={<Badge>View</Badge>}
               >
                 {reportContent(report).map((data) => (
@@ -142,7 +145,7 @@ export const columns: ColumnDef<ReportFinance>[] = [
 
               <ActionDataModal
                 trigger="Update"
-                title={`catatan - ${report.id?.slice(0, 5)}`}
+                title={`catatan - ${reportIdSlice}`}
                 status={<Badge>Edit</Badge>}
               >
                 <UpdateReportModal
@@ -159,7 +162,7 @@ export const columns: ColumnDef<ReportFinance>[] = [
                   variant="ghost"
                   className="text-red-800 dark:text-red-700 m-0 p-0 w-fit h-fit"
                 >
-                  Delete {report.id?.slice(0, 4)}
+                  Delete {reportIdSlice}
                 </Button>
               </form>
             </DropdownMenuItem>

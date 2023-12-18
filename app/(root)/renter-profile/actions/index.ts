@@ -55,3 +55,16 @@ export async function uploadUserKtp(userId: string, file: string) {
 
   return { data, error };
 }
+
+export async function deleteRenterById(id?: string) {
+  const supabase = await createSupabaseServerClient();
+  try {
+    const { data, error } = await supabase.from("user").delete().eq("id", id);
+
+    revalidatePath("/");
+
+    return { data, error };
+  } catch (error) {
+    return { data: null, error: error as Error };
+  }
+}
