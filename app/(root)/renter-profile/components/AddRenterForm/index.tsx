@@ -18,10 +18,11 @@ import { Button } from "@/components/ui/button";
 import DropDownComboBox from "@/app/(root)/(dashboard)/components/AddReportForm/DropDownComboBox";
 import { paymentStatusData, rentTimeData, statusData } from "../../data";
 import { houseNameData } from "@/app/(root)/(dashboard)/data";
-import { addUser } from "../../actions";
+import { addUser, uploadUserKtp } from "../../actions";
 import { toast } from "@/components/ui/use-toast";
 import { DialogFooter } from "@/components/ui/dialog";
 import { AiOutlineLoading } from "react-icons/ai";
+import { fileToBase64 } from "@/utils/FileToBase64";
 
 interface AddRenterFormProps {
   handleModalOpen: (value: boolean) => void;
@@ -55,10 +56,26 @@ function AddRenterForm({ handleModalOpen }: AddRenterFormProps) {
       amount_remaining: 0,
     };
 
-    handleModalOpen(false);
     startTransition(async () => {
-      const { user: newUser, error } = await addUser(payload);
+      const { user: userData, error } = await addUser(payload);
 
+      if (selectedFile && userData) {
+        const fileData = (await fileToBase64(selectedFile)) as string;
+        const { error: imageError } = await uploadUserKtp(
+          userData.id,
+          fileData
+        );
+
+        if (imageError && imageError.message) {
+          toast({
+            variant: "destructive",
+            title: "gagal mengupload Foto KTP!",
+            description: `${imageError.message}`,
+          });
+        }
+      }
+
+      handleModalOpen(false);
       if (error && error.message) {
         toast({
           variant: "destructive",
@@ -69,8 +86,8 @@ function AddRenterForm({ handleModalOpen }: AddRenterFormProps) {
         toast({
           title: "penyewa baru berhasil ditambahkan!",
         });
-        form.reset();
       }
+      form.reset();
     });
   }
 

@@ -2,7 +2,7 @@
 
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { User } from "@/types/user";
-import { PostgrestSingleResponse } from "@supabase/supabase-js";
+import { PostgrestError, PostgrestSingleResponse } from "@supabase/supabase-js";
 import { unstable_noStore as noStore, revalidatePath } from "next/cache";
 import { z } from "zod";
 import { FormSchema } from "../components/AddRenterForm/schema";
@@ -19,6 +19,11 @@ export type AddUserPayload = z.infer<typeof ModifiedSchema> & {
   amount_remaining: number;
 };
 
+type AddUserResponse = {
+  user: User | null;
+  error: PostgrestError | null;
+};
+
 export async function getRenterData(): Promise<
   PostgrestSingleResponse<User[]>
 > {
@@ -27,20 +32,26 @@ export async function getRenterData(): Promise<
   return await supabase.from("user").select("*").eq("role", "renter");
 }
 
-export async function addUser(data: AddUserPayload) {
+export async function addUser(data: AddUserPayload): Promise<AddUserResponse> {
   const supabase = await createSupabaseServerClient();
   const { data: user, error } = await supabase
     .from("user")
     .insert(data)
-    .select();
+    .select()
+    .single();
 
   return { user, error };
 }
 
-export async function uploadUserKtp(userId: string, file: File) {
+export async function uploadUserKtp(userId: string, file: string) {
   const supabase = await createSupabaseServerClient();
-  const result = await supabase.storage.from("images").upload(userId, file);
-  revalidatePath("/");
+  const buffer = Buffer.from(file.split(",")[1], "base64");
 
-  return JSON.stringify(result);
+  const { data, error } = await supabase.storage
+    .from("images")
+    .upload(`${userId}/$${userId}_profile.png`, buffer);
+
+  revalidatePath("/renter-profile");
+
+  return { data, error };
 }
