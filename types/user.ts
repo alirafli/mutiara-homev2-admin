@@ -5,10 +5,11 @@ export interface User {
   email: string;
   password: string;
   nik: string;
-  phone_umber: string;
+  phone_number: string;
   payment_status: boolean;
   amount_remaining: number;
   role: string;
   is_active: boolean;
   rent_time: string;
+  house_name: string;
 }

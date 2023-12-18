@@ -16,6 +16,22 @@ import { User } from "@/types/user";
 import { ColumnDef } from "@tanstack/react-table";
 import { MoreHorizontal } from "lucide-react";
 import { deleteRenterById } from "../../actions";
+import thousandAndDecimalSeparator from "@/utils/NumberFormatter";
+
+const reportContent = (renterData: User) => {
+  return [
+    { title: "nama", value: renterData.name },
+    { title: "email", value: renterData.email },
+    { title: "password", value: renterData.password },
+    { title: "nik", value: renterData.nik },
+    { title: "nomor telpon", value: renterData.phone_number },
+    { title: "status pembayaran", value: renterData.payment_status },
+    { title: "sisa pembayaran", value: renterData.amount_remaining },
+    { title: "status menetap", value: renterData.is_active },
+    { title: "waktu sewa", value: renterData.rent_time },
+    { title: "nama rumah", value: renterData.house_name },
+  ];
+};
 
 const renderIsActive = (value: boolean) => {
   return (
@@ -87,6 +103,10 @@ export const columns: ColumnDef<User>[] = [
   {
     accessorKey: "amount_remaining",
     header: "Sisa Pembayaran",
+    cell: ({ getValue }) => {
+      const value = getValue() as number;
+      return `Rp${thousandAndDecimalSeparator(value)}`;
+    },
   },
   {
     id: "action",
@@ -125,7 +145,22 @@ export const columns: ColumnDef<User>[] = [
                 title={`catatan - `}
                 status={<Badge>View</Badge>}
               >
-                <h1>{renterData.name}</h1>
+                {reportContent(renterData).map((data) => (
+                  <div key={data.title} className="mb-4">
+                    <h1 className="scroll-m-20 border-b-2 text-lg font-medium tracking-tight first:mt-0 mb-2">
+                      {data.title}
+                    </h1>
+                    <h2>
+                      {data.title === "status pembayaran"
+                        ? renderStatus(data.value as boolean)
+                        : data.title === "status menetap"
+                        ? renderIsActive(data.value as boolean)
+                        : data.title === "sisa pembayaran"
+                        ? `Rp${thousandAndDecimalSeparator(Number(data.value))}`
+                        : data.value}
+                    </h2>
+                  </div>
+                ))}
               </ActionDataModal>
 
               <ActionDataModal
