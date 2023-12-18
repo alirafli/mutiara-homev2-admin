@@ -27,7 +27,7 @@ import { IoMdCheckmark } from "react-icons/io";
 interface DropDownComboBoxProps {
   field: any;
   form: any;
-  datas: { label: string; value: string }[];
+  datas: { label: string; value: any }[];
   placeHolder: string;
   title: string;
   keyLabel: string;

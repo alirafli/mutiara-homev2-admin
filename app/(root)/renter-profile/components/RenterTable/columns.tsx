@@ -15,6 +15,32 @@ import { User } from "@/types/user";
 import { ColumnDef } from "@tanstack/react-table";
 import { MoreHorizontal } from "lucide-react";
 
+const renderIsActive = (value: boolean) => {
+  return (
+    <div
+      className={` ${
+        value
+          ? "bg-green-300 dark:bg-green-700"
+          : "bg-zinc-300 dark:bg-zinc-700"
+      } text-center rounded-full px-1 capitalize`}
+    >
+      {value ? "Menetap" : "Pindah"}
+    </div>
+  );
+};
+
+const renderStatus = (value: boolean) => {
+  return (
+    <div
+      className={` ${
+        value ? "bg-green-300 dark:bg-green-700" : "bg-red-300 dark:bg-red-700"
+      } text-center rounded-full px-1 capitalize`}
+    >
+      {value ? "Lunas" : "Belum Membayar"}
+    </div>
+  );
+};
+
 export const columns: ColumnDef<User>[] = [
   {
     header: "No",
@@ -37,6 +63,9 @@ export const columns: ColumnDef<User>[] = [
   {
     accessorKey: "is_active",
     header: "Status Menetap",
+    cell: ({ getValue }) => {
+      return renderIsActive(getValue() as boolean);
+    },
   },
   {
     accessorKey: "nik",
@@ -48,7 +77,10 @@ export const columns: ColumnDef<User>[] = [
   },
   {
     accessorKey: "payment_status",
-    header: "Nama Penyewa",
+    header: "Status Pembayaran",
+    cell: ({ getValue }) => {
+      return renderStatus(getValue() as boolean);
+    },
   },
   {
     accessorKey: "amount_remaining",

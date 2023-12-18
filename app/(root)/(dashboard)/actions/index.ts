@@ -4,17 +4,10 @@ import { PostgrestSingleResponse } from "@supabase/supabase-js";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { ReportFinance } from "@/types/financeReport";
 import { unstable_noStore as noStore, revalidatePath } from "next/cache";
+import { z } from "zod";
+import { formSchema } from "../components/AddReportForm/formSchema";
 
-interface UpdateReportPayloadProps {
-  amount: number;
-  created_at: Date;
-  house_name: string;
-  renter: string;
-  category: string;
-  type: string;
-  account: string;
-  note: string;
-}
+export type UpdateReportPayloadProps = z.infer<typeof formSchema>;
 
 export async function getAllFinanceReport(): Promise<
   PostgrestSingleResponse<ReportFinance[]>

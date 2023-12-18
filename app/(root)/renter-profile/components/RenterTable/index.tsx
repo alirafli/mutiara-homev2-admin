@@ -114,7 +114,7 @@ function RenterTable({ users }: RenterTableProps) {
           modal={modal}
           handleModalOpen={handleModalOpen}
         >
-          <AddRenterForm />
+          <AddRenterForm handleModalOpen={handleModalOpen} />
         </AddDataModal>
 
         <div className="space-x-2">

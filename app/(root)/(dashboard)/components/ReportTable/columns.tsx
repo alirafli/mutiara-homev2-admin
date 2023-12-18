@@ -20,7 +20,7 @@ import { toast } from "@/components/ui/use-toast";
 import UpdateReportModal from "../UpdateReportModal";
 import { Badge } from "@/components/ui/badge";
 
-const ReportContent = (reportData: ReportFinance) => {
+const reportContent = (reportData: ReportFinance) => {
   return [
     {
       title: "Tanggal Dibuat",
@@ -124,7 +124,7 @@ export const columns: ColumnDef<ReportFinance>[] = [
                 title={`catatan - ${report.id?.slice(0, 5)}`}
                 status={<Badge>View</Badge>}
               >
-                {ReportContent(report).map((data) => (
+                {reportContent(report).map((data) => (
                   <div key={data.title} className="mb-4">
                     <h1 className="scroll-m-20 border-b-2 text-lg font-medium tracking-tight first:mt-0 mb-2">
                       {data.title}
@@ -146,7 +146,7 @@ export const columns: ColumnDef<ReportFinance>[] = [
                 status={<Badge>Edit</Badge>}
               >
                 <UpdateReportModal
-                  report={ReportContent(report)}
+                  report={reportContent(report)}
                   id={report.id}
                 />
               </ActionDataModal>
