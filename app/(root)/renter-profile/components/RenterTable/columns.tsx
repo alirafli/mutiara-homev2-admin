@@ -37,7 +37,7 @@ const reportContent = (renterData: User) => {
 const renderIsActive = (value: boolean) => {
   return (
     <div
-      className={` ${
+      className={`w-fit px-2 ${
         value
           ? "bg-green-300 dark:bg-green-700"
           : "bg-zinc-300 dark:bg-zinc-700"
@@ -51,7 +51,7 @@ const renderIsActive = (value: boolean) => {
 const renderStatus = (value: boolean) => {
   return (
     <div
-      className={` ${
+      className={`w-fit px-2 ${
         value ? "bg-green-300 dark:bg-green-700" : "bg-red-300 dark:bg-red-700"
       } text-center rounded-full px-1 capitalize`}
     >
@@ -72,12 +72,9 @@ export const columns: ColumnDef<User>[] = [
     header: "Nama Penyewa",
   },
   {
-    accessorKey: "phone_number",
-    header: "No Telpon",
-  },
-  {
     accessorKey: "house_name",
     header: "Rumah Sewa",
+
   },
   {
     accessorKey: "is_active",
@@ -85,10 +82,6 @@ export const columns: ColumnDef<User>[] = [
     cell: ({ getValue }) => {
       return renderIsActive(getValue() as boolean);
     },
-  },
-  {
-    accessorKey: "nik",
-    header: "NIK",
   },
   {
     accessorKey: "rent_time",
@@ -143,7 +136,7 @@ export const columns: ColumnDef<User>[] = [
             <div className="flex flex-col pl-2">
               <ActionDataModal
                 trigger="Detail"
-                title={`catatan - `}
+                title={`${renterData.name}`}
                 status={<Badge>View</Badge>}
               >
                 <Image
@@ -173,7 +166,7 @@ export const columns: ColumnDef<User>[] = [
 
               <ActionDataModal
                 trigger="Update"
-                title={`catatan -`}
+                title={`${renterData.name}`}
                 status={<Badge>Edit</Badge>}
               >
                 <h1>bbb</h1>
