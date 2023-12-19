@@ -16,13 +16,13 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import DropDownComboBox from "@/app/(root)/(dashboard)/components/AddReportForm/DropDownComboBox";
-import { paymentStatusData, rentTimeData, statusData } from "../../data";
-import { houseNameData } from "@/app/(root)/(dashboard)/data";
-import { addUser, uploadUserKtp } from "../../actions";
+import { addUser, updateRenterById, uploadUserKtp } from "../../actions";
 import { toast } from "@/components/ui/use-toast";
 import { DialogFooter } from "@/components/ui/dialog";
 import { AiOutlineLoading } from "react-icons/ai";
 import { fileToBase64 } from "@/utils/FileToBase64";
+import { paymentStatusData, rentTimeData, statusData } from "@/data/renterData";
+import { houseNameData } from "@/data/dashboardData";
 
 interface AddRenterFormProps {
   handleModalOpen: (value: boolean) => void;
@@ -61,10 +61,13 @@ function AddRenterForm({ handleModalOpen }: AddRenterFormProps) {
 
       if (selectedFile && userData) {
         const fileData = (await fileToBase64(selectedFile)) as string;
-        const { error: imageError } = await uploadUserKtp(
+        const { error: imageError, data } = await uploadUserKtp(
           userData.id,
-          fileData
+          fileData,
+          selectedFile.name
         );
+
+        await updateRenterById(userData.id, { image_url: data?.path });
 
         if (imageError && imageError.message) {
           toast({
@@ -119,7 +122,7 @@ function AddRenterForm({ handleModalOpen }: AddRenterFormProps) {
                 form={form}
                 keyLabel={"is_active"}
                 placeHolder="Pilih status"
-                title="Status"
+                title="Status Menetap"
               />
             )}
           />

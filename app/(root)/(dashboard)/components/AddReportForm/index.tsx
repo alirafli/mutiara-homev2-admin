@@ -32,7 +32,7 @@ import {
   houseNameData,
   paymentType,
   renterNameData,
-} from "../../data";
+} from "@/data/dashboardData";
 
 interface AddReportFormProps {
   handleModalOpen: (value: boolean) => void;

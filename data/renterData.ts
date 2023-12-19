@@ -1,6 +1,6 @@
 export const statusData = [
   { label: "Menetap", value: "ya" },
-  { label: "Tidak Aktif", value: "tidak" },
+  { label: "Pindah", value: "tidak" },
 ];
 
 export const paymentStatusData = [

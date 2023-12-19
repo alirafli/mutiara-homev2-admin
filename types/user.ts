@@ -12,4 +12,5 @@ export interface User {
   is_active: boolean;
   rent_time: string;
   house_name: string;
+  image_url?: string;
 }

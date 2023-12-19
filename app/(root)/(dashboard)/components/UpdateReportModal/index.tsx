@@ -15,18 +15,13 @@ import { z } from "zod";
 import { formSchema } from "../AddReportForm/formSchema";
 import CalendarSelect from "../AddReportForm/CalendarSelect";
 import DropDownComboBox from "../AddReportForm/DropDownComboBox";
-import {
-  accountData,
-  categoryData,
-  houseNameData,
-  paymentType,
-  renterNameData,
-} from "../../data";
+
 import { Textarea } from "@/components/ui/textarea";
 import { AiOutlineLoading } from "react-icons/ai";
 import { useToast } from "@/components/ui/use-toast";
 import { updateReportById } from "../../actions";
 import { SheetClose } from "@/components/ui/sheet";
+import { accountData, categoryData, houseNameData, paymentType, renterNameData } from "@/data/dashboardData";
 
 interface UpdateReportModalProps {
   report: {

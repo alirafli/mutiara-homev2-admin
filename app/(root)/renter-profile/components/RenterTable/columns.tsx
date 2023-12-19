@@ -15,11 +15,12 @@ import { toast } from "@/components/ui/use-toast";
 import { User } from "@/types/user";
 import { ColumnDef } from "@tanstack/react-table";
 import { MoreHorizontal } from "lucide-react";
-import { deleteRenterById } from "../../actions";
+import { deleteKtpImage, deleteRenterById } from "../../actions";
 import thousandAndDecimalSeparator from "@/utils/NumberFormatter";
 import Image from "next/image";
+import UpdateRenterModal from "../UpdateRenterModal";
 
-const reportContent = (renterData: User) => {
+const renterContent = (renterData: User) => {
   return [
     { title: "nama", value: renterData.name },
     { title: "email", value: renterData.email },
@@ -74,7 +75,6 @@ export const columns: ColumnDef<User>[] = [
   {
     accessorKey: "house_name",
     header: "Rumah Sewa",
-
   },
   {
     accessorKey: "is_active",
@@ -112,6 +112,8 @@ export const columns: ColumnDef<User>[] = [
 
       const deleteRenter = async () => {
         const result = await deleteRenterById(renterData.id);
+        await deleteKtpImage(renterData.image_url);
+
         if (result.error && result.error.message) {
           toast({
             title: `gagal menghapus ${renterIdSlice}`,
@@ -139,14 +141,15 @@ export const columns: ColumnDef<User>[] = [
                 title={`${renterData.name}`}
                 status={<Badge>View</Badge>}
               >
-                <Image
-                  src={`https://jhpvantiskndecjywdon.supabase.co/storage/v1/object/public/images/${renterData.id}/$${renterData.id}_profile.png?t=2023-12-18T14%3A53%3A20.550Z`}
-                  alt="image"
-                  className="bg-contain mx-auto aspect-video object-cover rounded-md mb-5"
-                  width={300}
-                  height={300}
-                />
-                {reportContent(renterData).map((data) => (
+                <div className="mx-auto w-[300px] h-[150px] relative mb-5">
+                  <Image
+                    src={`https://jhpvantiskndecjywdon.supabase.co/storage/v1/object/public/images/${renterData.image_url}`}
+                    alt="image"
+                    className="bg-contain mx-auto aspect-video object-cover rounded-md"
+                    fill
+                  />
+                </div>
+                {renterContent(renterData).map((data) => (
                   <div key={data.title} className="mb-4">
                     <h1 className="scroll-m-20 border-b-2 text-lg font-medium tracking-tight first:mt-0 mb-2">
                       {data.title}
@@ -169,7 +172,11 @@ export const columns: ColumnDef<User>[] = [
                 title={`${renterData.name}`}
                 status={<Badge>Edit</Badge>}
               >
-                <h1>bbb</h1>
+                <UpdateRenterModal
+                  renter={renterContent(renterData)}
+                  imageUrl={renterData.image_url}
+                  id={renterData.id}
+                />
               </ActionDataModal>
             </div>
 
