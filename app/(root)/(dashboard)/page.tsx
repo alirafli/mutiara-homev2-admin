@@ -7,6 +7,7 @@ import { getAllFinanceReport } from "./actions";
 import { ReportTable } from "./components/ReportTable";
 import HouseIncomePie from "./components/HouseIncomeChart";
 import IncomeChart from "./components/IncomeChart";
+import { getRenterData } from "../renter-profile/actions";
 
 export const metadata: Metadata = {
   title: "Dashboard",
@@ -16,6 +17,11 @@ async function Dashboard() {
   const { data } = await readUserSession();
 
   const { data: report } = await getAllFinanceReport();
+  const { data: userProfile } = await getRenterData();
+
+  const userAmountRemaining = userProfile
+    ?.map((item) => item.amount_remaining)
+    .reduce((accumulator, current) => accumulator + current, 0);
 
   const totalIncome = () => {
     const expense =
@@ -51,11 +57,10 @@ async function Dashboard() {
           title="Total Penghasilan"
           income={totalIncome() ?? 0}
         />
-        {/* TODO: will update this card later */}
+
         <MoneyInformationCard
-          title="Tagihan Penyewa"
-          description="this will be the desc"
-          income={100000000}
+          title="Sisa Tagihan Penyewa"
+          income={userAmountRemaining ?? 0}
         />
       </div>
       <div className="flex mt-6 flex-col md:flex-row">
