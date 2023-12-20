@@ -21,7 +21,13 @@ import { AiOutlineLoading } from "react-icons/ai";
 import { useToast } from "@/components/ui/use-toast";
 import { updateReportById } from "../../actions";
 import { SheetClose } from "@/components/ui/sheet";
-import { accountData, categoryData, houseNameData, paymentType, renterNameData } from "@/data/dashboardData";
+import {
+  accountData,
+  categoryData,
+  houseNameData,
+  paymentType,
+} from "@/data/dashboardData";
+import { GetUserNameQuery } from "@/hooks/useUser";
 
 interface UpdateReportModalProps {
   report: {
@@ -108,7 +114,7 @@ function UpdateReportModal({ report, id }: UpdateReportModalProps) {
             render={({ field }) => (
               <DropDownComboBox
                 field={field}
-                datas={renterNameData}
+                datas={GetUserNameQuery() ?? []}
                 form={form}
                 keyLabel="renter"
                 placeHolder="Pilih penyewa"

@@ -8,6 +8,7 @@ import Sidebar from "@/components/ui/sidebar";
 import { ReduxProviders } from "@/lib/redux/provider";
 import LogoutButton from "@/components/ui/logoutButton";
 import { Toaster } from "@/components/ui/toaster";
+import Provider from "@/utils/provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -38,7 +39,7 @@ export default async function RootLayout({
               <Sidebar logout={<LogoutButton />} />
               <div className="w-full mb-6">
                 <Topbar user={user?.[0]} />
-                {children}
+                <Provider>{children}</Provider>
                 <Toaster />
               </div>
             </div>

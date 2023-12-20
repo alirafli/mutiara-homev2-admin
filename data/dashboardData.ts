@@ -17,8 +17,3 @@ export const accountData = [
   { label: "Tunai", value: "Tunai" },
   { label: "Bank", value: "Bank" },
 ];
-
-export const renterNameData = [
-  { label: "Raihan Mustofa", value: "Raihan Mustofa" },
-  { label: "Ruri Aini", value: "Ruri Aini" },
-];

@@ -31,8 +31,8 @@ import {
   categoryData,
   houseNameData,
   paymentType,
-  renterNameData,
 } from "@/data/dashboardData";
+import { GetUserNameQuery } from "@/hooks/useUser";
 
 interface AddReportFormProps {
   handleModalOpen: (value: boolean) => void;
@@ -108,7 +108,7 @@ function AddReportForm({ handleModalOpen }: AddReportFormProps) {
             render={({ field }) => (
               <DropDownComboBox
                 field={field}
-                datas={renterNameData}
+                datas={GetUserNameQuery() ?? []}
                 form={form}
                 keyLabel="renter"
                 placeHolder="Pilih penyewa"
