@@ -23,6 +23,7 @@ import AddDataModal from "@/components/ui/addDataModal";
 import { Button } from "@/components/ui/button";
 
 import Filter from "./Filter";
+import AddHouseForm from "../HouseForm";
 
 interface HouseTableProps {
   Houses: House[];
@@ -117,7 +118,7 @@ function HouseTable({ Houses }: HouseTableProps) {
           modal={modal}
           handleModalOpen={handleModalOpen}
         >
-          <h1>will be add form</h1>
+          <AddHouseForm handleModalOpen={handleModalOpen} />
         </AddDataModal>
 
         <div className="space-x-2">

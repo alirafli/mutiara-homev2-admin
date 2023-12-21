@@ -9,6 +9,8 @@ import { ReduxProviders } from "@/lib/redux/provider";
 import LogoutButton from "@/components/ui/logoutButton";
 import { Toaster } from "@/components/ui/toaster";
 import Provider from "@/utils/provider";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const inter = Inter({ subsets: ["latin"] });
 

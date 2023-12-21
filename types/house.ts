@@ -12,4 +12,5 @@ export interface House {
   rent_status: boolean;
   id: string;
   user_id: User;
+  photos?: string[];
 }

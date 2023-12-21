@@ -11,12 +11,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-// import { toast } from "@/components/ui/use-toast";
 import { ColumnDef } from "@tanstack/react-table";
 import { MoreHorizontal } from "lucide-react";
 import thousandAndDecimalSeparator from "@/utils/NumberFormatter";
-// import Image from "next/image";
 import { House } from "@/types/house";
+import Photos from "./Photos";
+import { deleteHouseById, deletePhotos } from "../../actions";
+import { toast } from "@/components/ui/use-toast";
 
 const HouseContent = (houseData: House) => {
   return [
@@ -117,6 +118,20 @@ export const columns: ColumnDef<House>[] = [
       const houseData = row.original;
       const houseIdSlice = houseData.id?.slice(0, 5);
 
+      const deleteHouse = async () => {
+        const result = await deleteHouseById(houseData.id);
+        await deletePhotos(houseData.photos ?? []);
+        if (result.error && result.error.message) {
+          toast({
+            title: `gagal menghapus ${houseIdSlice}`,
+          });
+        } else {
+          toast({
+            title: `berhasil menghapus ${houseIdSlice}`,
+          });
+        }
+      };
+
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -133,6 +148,9 @@ export const columns: ColumnDef<House>[] = [
                 title={`${houseData.name}`}
                 status={<Badge>View</Badge>}
               >
+                <div>
+                  <Photos id={houseData.id} photos={houseData.photos ?? []} />
+                </div>
                 {HouseContent(houseData).map((data) => (
                   <div key={data.title} className="mb-4">
                     <h1 className="scroll-m-20 border-b-2 text-lg font-medium tracking-tight first:mt-0 mb-2">
@@ -154,7 +172,7 @@ export const columns: ColumnDef<House>[] = [
 
             <DropdownMenuSeparator />
             <DropdownMenuItem>
-              <form>
+              <form action={deleteHouse}>
                 <Button
                   variant="ghost"
                   className="text-red-800 dark:text-red-700 m-0 p-0 w-fit h-fit"
