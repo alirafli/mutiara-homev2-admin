@@ -9,5 +9,5 @@ export const FormSchema = z.object({
   bathroom: z.string({ required_error: "wajib di isi!" }),
   price_per_month: z.string({ required_error: "wajib di isi!" }),
   rent_status: z.string(),
-  photos: z.any(),
+  photos: z.any().optional(),
 });

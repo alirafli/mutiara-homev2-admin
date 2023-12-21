@@ -17,7 +17,7 @@ const ModifiedSchema = FormSchema.omit({
   rent_status: true,
 });
 
-export type AddUserPayload =
+export type AddHousePayload =
   | z.infer<typeof ModifiedSchema> & {
       income: number;
       has_previous: boolean;
@@ -33,7 +33,7 @@ export async function getHouseData(): Promise<
 }
 
 export async function addHouse(
-  data: AddUserPayload
+  data: AddHousePayload
 ): Promise<addHouseResponse> {
   const supabase = await createSupabaseServerClient();
   const { data: house, error } = await supabase
@@ -122,6 +122,24 @@ export async function deletePhotos(photos: string[]) {
     const { data, error } = await supabase.storage
       .from("images")
       .remove(photos);
+
+    return { data, error };
+  } catch (error) {
+    return { data: null, error: error as Error };
+  }
+}
+
+export async function updateHouseById(id?: string, payload?: AddHousePayload) {
+  const supabase = await createSupabaseServerClient();
+
+  try {
+    const { data, error } = await supabase
+      .from("house_rent")
+      .update(payload)
+      .eq("id", id)
+      .select();
+
+    revalidatePath("/rent-house");
 
     return { data, error };
   } catch (error) {

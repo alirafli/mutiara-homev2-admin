@@ -15,7 +15,6 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import DropDownComboBox from "@/app/(root)/(dashboard)/components/AddReportForm/DropDownComboBox";
 import { addUser, updateRenterById, uploadUserKtp } from "../../actions";
 import { toast } from "@/components/ui/use-toast";
 import { DialogFooter } from "@/components/ui/dialog";
@@ -23,6 +22,7 @@ import { AiOutlineLoading } from "react-icons/ai";
 import { fileToBase64 } from "@/utils/FileToBase64";
 import { paymentStatusData, rentTimeData, statusData } from "@/data/renterData";
 import { GetHousesNameQuery } from "@/hooks/useHouses";
+import DropDownComboBox from "@/components/ui/DropDownComboBox";
 
 interface AddRenterFormProps {
   handleModalOpen: (value: boolean) => void;

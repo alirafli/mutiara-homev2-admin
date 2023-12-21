@@ -18,11 +18,16 @@ import { House } from "@/types/house";
 import Photos from "./Photos";
 import { deleteHouseById, deletePhotos } from "../../actions";
 import { toast } from "@/components/ui/use-toast";
+import UpdateHouseModal from "../UpdateHouseModal";
 
 const HouseContent = (houseData: House) => {
   return [
     { title: "nama", value: houseData.name },
-    { title: "Penyewa", value: houseData?.user_id?.name ?? "-" },
+    {
+      title: "Penyewa",
+      value: houseData?.user_id?.name ?? "-",
+      id: houseData?.user_id?.id ?? "-",
+    },
     { title: "Status Sewa", value: houseData.rent_status },
     { title: "Harga per Bulan", value: houseData.price_per_month },
     { title: "alamat", value: houseData.address },
@@ -166,7 +171,10 @@ export const columns: ColumnDef<House>[] = [
                 title={`${houseData.name}`}
                 status={<Badge>Edit</Badge>}
               >
-                <h1>update</h1>
+                <UpdateHouseModal
+                  house={HouseContent(houseData)}
+                  id={houseData.id}
+                />
               </ActionDataModal>
             </div>
 
