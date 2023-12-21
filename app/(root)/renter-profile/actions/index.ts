@@ -11,6 +11,7 @@ const ModifiedSchema = FormSchema.omit({
   is_active: true,
   payment_status: true,
   ktp_image: true,
+  house_name: true,
 });
 
 export type AddUserPayload =
@@ -19,6 +20,7 @@ export type AddUserPayload =
       payment_status: boolean;
       amount_remaining: number;
       image_url?: string;
+      house_name: string | null;
     })
   | {
       image_url?: string;
@@ -34,7 +36,10 @@ export async function getRenterData(): Promise<
 > {
   noStore();
   const supabase = await createSupabaseServerClient();
-  return await supabase.from("user").select(`*,house_name(*)`).eq("role", "renter");
+  return await supabase
+    .from("user")
+    .select(`*,house_name(*)`)
+    .eq("role", "renter");
 }
 
 export async function addUser(data: AddUserPayload): Promise<AddUserResponse> {

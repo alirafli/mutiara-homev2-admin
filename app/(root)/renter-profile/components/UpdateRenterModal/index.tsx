@@ -31,6 +31,7 @@ interface UpdateRenterModalProps {
   renter: {
     title: string;
     value: any;
+    id?: string;
   }[];
   id: string;
   imageUrl?: string;
@@ -40,14 +41,23 @@ function UpdateRenterModal({ renter, id, imageUrl }: UpdateRenterModalProps) {
   const [selectedFile, setSelectedFile] = useState<File>();
   const { toast } = useToast();
 
-  const getValueByTitle = (title: string) => {
+  const getValueByTitle = (title: string, id = false) => {
+    if (id) return renter.find((e) => e.title === title)?.id ?? "";
     return renter.find((e) => e.title === title)?.value ?? "";
+  };
+
+  const houseWithNullData = () => {
+    return [
+      { label: "tidak ada", value: null },
+      ...(GetHousesNameQuery() ?? ""),
+    ];
   };
 
   const form = useForm<FormSchemaWithoutKtpImage & OptionalFormSchema>({
     resolver: zodResolver(
-      FormSchema.omit({ ktp_image: true }).extend({
+      FormSchema.omit({ ktp_image: true, house_name: true }).extend({
         amount_remaining: z.string({ required_error: "wajib di isi!" }),
+        house_name: z.string().nullable().optional(),
       })
     ),
     defaultValues: {
@@ -57,7 +67,7 @@ function UpdateRenterModal({ renter, id, imageUrl }: UpdateRenterModalProps) {
       password: getValueByTitle("password"),
       phone_number: getValueByTitle("nomor telpon"),
       payment_status: getValueByTitle("status pembayaran") ? "ya" : "tidak",
-      house_name: getValueByTitle("nama rumah"),
+      house_name: getValueByTitle("nama rumah", true),
       nik: getValueByTitle("nik"),
       rent_time: getValueByTitle("waktu sewa"),
       amount_remaining: getValueByTitle("sisa pembayaran").toString(),
@@ -73,11 +83,13 @@ function UpdateRenterModal({ renter, id, imageUrl }: UpdateRenterModalProps) {
     const payload = {
       ...data,
       is_active: data.is_active === "ya" ? true : false,
+      house_name: data.house_name === "-" ? null : data.house_name,
       payment_status: data.payment_status === "ya" ? true : false,
       amount_remaining: Number(data.amount_remaining),
     };
     startTransition(async () => {
       const result = await updateRenterById(id, payload);
+
       if (result.error && result.error.message) {
         toast({
           title: `gagal update ${id?.slice(0, 5)}`,
@@ -213,7 +225,7 @@ function UpdateRenterModal({ renter, id, imageUrl }: UpdateRenterModalProps) {
             render={({ field }) => (
               <DropDownComboBox
                 field={field}
-                datas={GetHousesNameQuery() ?? []}
+                datas={houseWithNullData() ?? []}
                 form={form}
                 keyLabel={"house_name"}
                 placeHolder="Pilih rumah"

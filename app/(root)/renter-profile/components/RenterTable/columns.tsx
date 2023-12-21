@@ -31,7 +31,11 @@ const renterContent = (renterData: User) => {
     { title: "sisa pembayaran", value: renterData.amount_remaining },
     { title: "status menetap", value: renterData.is_active },
     { title: "waktu sewa", value: renterData.rent_time },
-    { title: "nama rumah", value: renterData.house_name.id },
+    {
+      title: "nama rumah",
+      value: renterData?.house_name?.name ?? "-",
+      id: renterData?.house_name?.id ?? "-",
+    },
   ];
 };
 
