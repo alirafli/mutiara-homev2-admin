@@ -26,11 +26,19 @@ const reportContent = (reportData: ReportFinance) => {
       title: "Tanggal Dibuat",
       value: reportData.created_at,
     },
-    { title: "Nama Penyewa", value: reportData.renter },
+    {
+      title: "Nama Penyewa",
+      value: reportData.renter_id.name,
+      id: reportData.renter_id.id,
+    },
     { title: "Kategori", value: reportData.category },
     { title: "Jenis Catatan", value: reportData.type },
     { title: "Akun Keuangan", value: reportData.account },
-    { title: "Nama Rumah", value: reportData.house_name },
+    {
+      title: "Nama Rumah",
+      value: reportData.house_id.name,
+      id: reportData.house_id.id,
+    },
     {
       title: "Nominal Pembayaran",
       value: reportData.amount,
@@ -64,7 +72,7 @@ export const columns: ColumnDef<ReportFinance>[] = [
     },
   },
   {
-    accessorKey: "renter",
+    accessorKey: "renter_id.name",
     header: "Penyewa",
   },
   {
@@ -79,7 +87,7 @@ export const columns: ColumnDef<ReportFinance>[] = [
     header: "Jenis",
   },
   {
-    accessorKey: "house_name",
+    accessorKey: "house_id.name",
     header: "Nama Rumah",
   },
   {

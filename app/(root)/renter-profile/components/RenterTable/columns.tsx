@@ -31,7 +31,7 @@ const renterContent = (renterData: User) => {
     { title: "sisa pembayaran", value: renterData.amount_remaining },
     { title: "status menetap", value: renterData.is_active },
     { title: "waktu sewa", value: renterData.rent_time },
-    { title: "nama rumah", value: renterData.house_name },
+    { title: "nama rumah", value: renterData.house_name.id },
   ];
 };
 
@@ -73,7 +73,7 @@ export const columns: ColumnDef<User>[] = [
     header: "Nama Penyewa",
   },
   {
-    accessorKey: "house_name",
+    accessorKey: "house_name.name",
     header: "Rumah Sewa",
   },
   {

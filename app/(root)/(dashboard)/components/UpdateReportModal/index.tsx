@@ -21,18 +21,15 @@ import { AiOutlineLoading } from "react-icons/ai";
 import { useToast } from "@/components/ui/use-toast";
 import { updateReportById } from "../../actions";
 import { SheetClose } from "@/components/ui/sheet";
-import {
-  accountData,
-  categoryData,
-  houseNameData,
-  paymentType,
-} from "@/data/dashboardData";
+import { accountData, categoryData, paymentType } from "@/data/dashboardData";
 import { GetUserNameQuery } from "@/hooks/useUser";
+import { GetHousesNameQuery } from "@/hooks/useHouses";
 
 interface UpdateReportModalProps {
   report: {
     title: string;
     value: string | Date | number;
+    id?: string;
   }[];
   id?: string;
 }
@@ -42,7 +39,8 @@ function UpdateReportModal({ report, id }: UpdateReportModalProps) {
 
   const { toast } = useToast();
 
-  const getValueByTitle = (title: string) => {
+  const getValueByTitle = (title: string, id = false) => {
+    if (id) return report.find((e) => e.title === title)?.id ?? "";
     return report.find((e) => e.title === title)?.value ?? "";
   };
 
@@ -53,17 +51,22 @@ function UpdateReportModal({ report, id }: UpdateReportModalProps) {
       amount: getValueByTitle("Nominal Pembayaran").toString(),
       account: getValueByTitle("Akun Keuangan").toString(),
       category: getValueByTitle("Kategori").toString(),
-      house_name: getValueByTitle("Nama Rumah").toString(),
+      house_name: getValueByTitle("Nama Rumah", true).toString(),
       note: getValueByTitle("Catatan Tambahan").toString(),
-      renter: getValueByTitle("Nama Penyewa").toString(),
+      renter: getValueByTitle("Nama Penyewa", true).toString(),
       type: getValueByTitle("Jenis Catatan").toString(),
     },
   });
 
   function onSubmit(data: z.infer<typeof formSchema>) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { house_name, renter, ...restPayloads } = data;
+
     const payload = {
-      ...data,
+      ...restPayloads,
       amount: Number(data.amount),
+      house_id: data.house_name,
+      renter_id: data.renter,
     };
 
     startTransition(async () => {
@@ -99,7 +102,7 @@ function UpdateReportModal({ report, id }: UpdateReportModalProps) {
             render={({ field }) => (
               <DropDownComboBox
                 field={field}
-                datas={houseNameData}
+                datas={GetHousesNameQuery() ?? []}
                 form={form}
                 keyLabel={"house_name"}
                 placeHolder="Pilih rumah"

@@ -34,7 +34,7 @@ export async function getRenterData(): Promise<
 > {
   noStore();
   const supabase = await createSupabaseServerClient();
-  return await supabase.from("user").select("*").eq("role", "renter");
+  return await supabase.from("user").select(`*,house_name(*)`).eq("role", "renter");
 }
 
 export async function addUser(data: AddUserPayload): Promise<AddUserResponse> {

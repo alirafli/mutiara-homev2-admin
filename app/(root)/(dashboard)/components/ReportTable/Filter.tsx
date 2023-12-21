@@ -21,9 +21,11 @@ function Filter({ table }: FilterProps) {
     <div className="flex gap-6">
       <Input
         placeholder="Filter Penyewa"
-        value={(table.getColumn("renter")?.getFilterValue() as string) ?? ""}
+        value={
+          (table.getColumn("renter_id_name")?.getFilterValue() as string) ?? ""
+        }
         onChange={(event) =>
-          table.getColumn("renter")?.setFilterValue(event.target.value)
+          table.getColumn("renter_id_name")?.setFilterValue(event.target.value)
         }
         className="max-w-xs mb-6"
       />

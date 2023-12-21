@@ -26,13 +26,9 @@ import { createReport } from "../../actions";
 import { toast } from "@/components/ui/use-toast";
 
 import DropDownComboBox from "./DropDownComboBox";
-import {
-  accountData,
-  categoryData,
-  houseNameData,
-  paymentType,
-} from "@/data/dashboardData";
+import { accountData, categoryData, paymentType } from "@/data/dashboardData";
 import { GetUserNameQuery } from "@/hooks/useUser";
+import { GetHousesNameQuery } from "@/hooks/useHouses";
 
 interface AddReportFormProps {
   handleModalOpen: (value: boolean) => void;
@@ -51,11 +47,17 @@ function AddReportForm({ handleModalOpen }: AddReportFormProps) {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     handleModalOpen(false);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { house_name, renter, ...restValues } = values;
+
     startTransition(async () => {
       const payload = {
-        ...values,
+        ...restValues,
         amount: Number(values.amount),
+        renter_id: values.renter,
+        house_id: values.house_name,
       };
+
       const result = await createReport(payload);
 
       const { error } = JSON.parse(result);
@@ -91,7 +93,7 @@ function AddReportForm({ handleModalOpen }: AddReportFormProps) {
             render={({ field }) => (
               <DropDownComboBox
                 field={field}
-                datas={houseNameData}
+                datas={GetHousesNameQuery() ?? []}
                 form={form}
                 keyLabel={"house_name"}
                 placeHolder="Pilih rumah"

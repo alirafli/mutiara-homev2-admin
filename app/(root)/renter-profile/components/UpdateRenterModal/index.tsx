@@ -18,9 +18,9 @@ import { Button } from "@/components/ui/button";
 import { AiOutlineLoading } from "react-icons/ai";
 import DropDownComboBox from "@/components/ui/DropDownComboBox";
 import { paymentStatusData, rentTimeData, statusData } from "@/data/renterData";
-import { houseNameData } from "@/data/dashboardData";
 import { fileToBase64 } from "@/utils/FileToBase64";
 import { updateRenterById, updateUserKtp } from "../../actions";
+import { GetHousesNameQuery } from "@/hooks/useHouses";
 
 type FormSchemaWithoutKtpImage = Omit<z.infer<typeof FormSchema>, "ktp_image">;
 
@@ -213,7 +213,7 @@ function UpdateRenterModal({ renter, id, imageUrl }: UpdateRenterModalProps) {
             render={({ field }) => (
               <DropDownComboBox
                 field={field}
-                datas={houseNameData}
+                datas={GetHousesNameQuery() ?? []}
                 form={form}
                 keyLabel={"house_name"}
                 placeHolder="Pilih rumah"

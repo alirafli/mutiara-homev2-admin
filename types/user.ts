@@ -1,3 +1,5 @@
+import { House } from "./house";
+
 export interface User {
   id: string;
   created_at: Date;
@@ -11,6 +13,6 @@ export interface User {
   role: string;
   is_active: boolean;
   rent_time: string;
-  house_name: string;
   image_url?: string;
+  house_name: House;
 }

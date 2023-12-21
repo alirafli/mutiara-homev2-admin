@@ -7,12 +7,28 @@ import { unstable_noStore as noStore, revalidatePath } from "next/cache";
 import { z } from "zod";
 import { formSchema } from "../components/AddReportForm/formSchema";
 
+type ReportPayload = {
+  id?: string;
+  account: string;
+  amount: number;
+  created_at: Date;
+  note: string;
+  category: string;
+  type: string;
+  house_id: string;
+  renter_id: string;
+};
+
 const ModifiedSchema = formSchema.omit({
+  house_name: true,
+  renter: true,
   amount: true,
 });
 
 export type UpdateReportPayloadProps = z.infer<typeof ModifiedSchema> & {
   amount: number;
+  house_id: string;
+  renter_id: string;
 };
 
 export async function getAllFinanceReport(): Promise<
@@ -20,10 +36,12 @@ export async function getAllFinanceReport(): Promise<
 > {
   noStore();
   const supabase = await createSupabaseServerClient();
-  return await supabase.from("report_finance").select("*");
+  return await supabase
+    .from("report_finance")
+    .select(`*, renter_id(*), house_id(*)`);
 }
 
-export async function createReport(data: ReportFinance) {
+export async function createReport(data: ReportPayload) {
   const supabase = await createSupabaseServerClient();
   const result = await supabase.from("report_finance").insert(data);
   revalidatePath("/");

@@ -1,3 +1,6 @@
+import { House } from "./house";
+import { User } from "./user";
+
 export interface ReportFinance {
   id?: string;
   renter: string;
@@ -8,4 +11,6 @@ export interface ReportFinance {
   note: string;
   category: string;
   type: string;
+  house_id: House;
+  renter_id: User;
 }

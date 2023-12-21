@@ -22,7 +22,7 @@ import { DialogFooter } from "@/components/ui/dialog";
 import { AiOutlineLoading } from "react-icons/ai";
 import { fileToBase64 } from "@/utils/FileToBase64";
 import { paymentStatusData, rentTimeData, statusData } from "@/data/renterData";
-import { houseNameData } from "@/data/dashboardData";
+import { GetHousesNameQuery } from "@/hooks/useHouses";
 
 interface AddRenterFormProps {
   handleModalOpen: (value: boolean) => void;
@@ -227,7 +227,7 @@ function AddRenterForm({ handleModalOpen }: AddRenterFormProps) {
             render={({ field }) => (
               <DropDownComboBox
                 field={field}
-                datas={houseNameData}
+                datas={GetHousesNameQuery() ?? []}
                 form={form}
                 keyLabel={"house_name"}
                 placeHolder="Pilih rumah"

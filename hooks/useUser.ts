@@ -15,7 +15,7 @@ export const GetUserNameQuery = (): any => {
   const { data: userName } = useUserQuery();
   return userName?.map((data) => ({
     label: data.name,
-    value: data.name,
+    value: data.id,
   }));
 };
 
