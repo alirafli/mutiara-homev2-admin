@@ -10,5 +10,5 @@ export async function getHouseData(): Promise<
 > {
   noStore();
   const supabase = await createSupabaseServerClient();
-  return await supabase.from("house_rent").select(`*, user_id(name)`);
+  return await supabase.from("house_rent").select(`*, user_id(*)`);
 }

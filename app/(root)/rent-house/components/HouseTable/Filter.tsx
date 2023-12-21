@@ -1,14 +1,14 @@
 import React from "react";
 import { Input } from "@/components/ui/input";
-// import {
-//   Select,
-//   SelectContent,
-//   SelectGroup,
-//   SelectItem,
-//   SelectLabel,
-//   SelectTrigger,
-//   SelectValue,
-// } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Table } from "@tanstack/react-table";
 import { House } from "@/types/house";
 
@@ -28,15 +28,15 @@ function Filter({ table }: FilterProps) {
         className="max-w-xs mb-6"
       />
 
-      {/* <Select
+      <Select
         defaultValue={
-          (table.getColumn("is_active")?.getFilterValue() as string) ?? ""
+          (table.getColumn("rent_status")?.getFilterValue() as string) ?? ""
         }
         onValueChange={(event) =>
           table
-            .getColumn("is_active")
+            .getColumn("rent_status")
             ?.setFilterValue(
-              event === "notall" ? "" : event === "menetap" ? true : false
+              event === "notall" ? "" : event === "ditempati" ? true : false
             )
         }
       >
@@ -47,36 +47,11 @@ function Filter({ table }: FilterProps) {
           <SelectGroup>
             <SelectLabel>Jenis</SelectLabel>
             <SelectItem value="notall">Semua</SelectItem>
-            <SelectItem value="menetap">Menetap</SelectItem>
-            <SelectItem value="pindah">Pindah</SelectItem>
+            <SelectItem value="kosong">kosong</SelectItem>
+            <SelectItem value="ditempati">ditempati</SelectItem>
           </SelectGroup>
         </SelectContent>
       </Select>
-
-      <Select
-        defaultValue={
-          (table.getColumn("payment_status")?.getFilterValue() as string) ?? ""
-        }
-        onValueChange={(event) =>
-          table
-            .getColumn("payment_status")
-            ?.setFilterValue(
-              event === "notall" ? "" : event === "lunas" ? true : false
-            )
-        }
-      >
-        <SelectTrigger className="w-[250px]">
-          <SelectValue placeholder="Filter Status Pembayaran" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectGroup>
-            <SelectLabel>Jenis</SelectLabel>
-            <SelectItem value="notall">Semua</SelectItem>
-            <SelectItem value="belum bayar">Belum Bayar</SelectItem>
-            <SelectItem value="lunas">lunas</SelectItem>
-          </SelectGroup>
-        </SelectContent>
-      </Select> */}
     </div>
   );
 }

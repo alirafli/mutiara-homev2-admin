@@ -1,3 +1,5 @@
+import { User } from "./user";
+
 export interface House {
   name: string;
   address: string;
@@ -9,5 +11,5 @@ export interface House {
   income: number;
   rent_status: boolean;
   id: string;
-  user_id: string;
+  user_id: User;
 }

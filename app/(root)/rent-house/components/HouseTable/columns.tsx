@@ -18,20 +18,20 @@ import thousandAndDecimalSeparator from "@/utils/NumberFormatter";
 // import Image from "next/image";
 import { House } from "@/types/house";
 
-// const renterContent = (houseData: House) => {
-//   return [
-//     { title: "nama", value: houseData.name },
-//     { title: "email", value: houseData.email },
-//     { title: "password", value: houseData.password },
-//     { title: "nik", value: houseData.nik },
-//     { title: "nomor telpon", value: houseData.phone_number },
-//     { title: "status pembayaran", value: houseData.payment_status },
-//     { title: "sisa pembayaran", value: houseData.amount_remaining },
-//     { title: "status menetap", value: houseData.is_active },
-//     { title: "waktu sewa", value: houseData.rent_time },
-//     { title: "nama rumah", value: houseData.house_name },
-//   ];
-// };
+const HouseContent = (houseData: House) => {
+  return [
+    { title: "nama", value: houseData.name },
+    { title: "Penyewa", value: houseData?.user_id?.name ?? "-" },
+    { title: "Status Sewa", value: houseData.rent_status },
+    { title: "Harga per Bulan", value: houseData.price_per_month },
+    { title: "alamat", value: houseData.address },
+    { title: "link maps", value: houseData.map_link },
+    { title: "Jumlah ruangan", value: houseData.room },
+    { title: "apakah ada parabot sebelumnya?", value: houseData.has_previous },
+    { title: "Jumlah kamar mandi", value: houseData.bathroom },
+    { title: "Pemasukan", value: houseData.income },
+  ];
+};
 
 const renderIsActive = (value: boolean) => {
   return (
@@ -45,6 +45,22 @@ const renderIsActive = (value: boolean) => {
       {value ? "Ditempati" : "Kosong"}
     </div>
   );
+};
+
+const renderDetails = (title: string, value: string | number | boolean) => {
+  if (title === "Pemasukan" || title === "Harga per Bulan")
+    return `Rp${thousandAndDecimalSeparator(Number(value))}`;
+
+  if (title === "apakah ada parabot sebelumnya?") {
+    if (value) return "Ada";
+    return "Tidak ada";
+  }
+
+  if (title === "Status Sewa") {
+    return renderIsActive(value as boolean);
+  }
+
+  return value?.toString() ?? "-";
 };
 
 export const columns: ColumnDef<House>[] = [
@@ -117,7 +133,14 @@ export const columns: ColumnDef<House>[] = [
                 title={`${houseData.name}`}
                 status={<Badge>View</Badge>}
               >
-                <h1>detail</h1>
+                {HouseContent(houseData).map((data) => (
+                  <div key={data.title} className="mb-4">
+                    <h1 className="scroll-m-20 border-b-2 text-lg font-medium tracking-tight first:mt-0 mb-2">
+                      {data.title}
+                    </h1>
+                    <h2>{renderDetails(data.title, data.value)}</h2>
+                  </div>
+                ))}
               </ActionDataModal>
 
               <ActionDataModal
