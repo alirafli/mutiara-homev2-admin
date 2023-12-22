@@ -61,7 +61,9 @@ function AddReportForm({ handleModalOpen }: AddReportFormProps) {
       };
 
       const result = await createReport(payload);
-      await incrementHouseAmount(payload.amount, payload.house_id);
+      if (payload.category === "Pemasukan") {
+        await incrementHouseAmount(payload.amount, payload.house_id);
+      }
 
       refetch();
       const { error } = JSON.parse(result);

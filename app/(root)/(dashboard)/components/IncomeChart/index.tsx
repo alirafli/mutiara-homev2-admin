@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Chart as ChartJS,
@@ -12,6 +12,15 @@ import {
   Legend,
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
+import { ReportFinance } from "@/types/financeReport";
+import { categorizeAndSummarize } from "@/utils/SummarizeReport";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 ChartJS.register(
   CategoryScale,
@@ -22,7 +31,19 @@ ChartJS.register(
   Legend
 );
 
-function IncomeChart() {
+interface IncomeChartProps {
+  report: ReportFinance[];
+}
+
+function IncomeChart({ report }: IncomeChartProps) {
+  const [yearFilter, setYearFilter] = useState<number>(
+    Number(new Date().getFullYear())
+  );
+  const reportSummarize = categorizeAndSummarize(report);
+  const FilterReportSummarize = categorizeAndSummarize(report).filter(
+    (e) => e.year === yearFilter
+  );
+
   const options = {
     maintainAspectRatio: false,
     responsive: true,
@@ -34,29 +55,26 @@ function IncomeChart() {
     },
   };
 
-  const labels = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-  ];
+  const labels = FilterReportSummarize.map((e) => e.monthName);
+  const getYears = reportSummarize
+    .map((e) => e.year)
+    .filter((value, index, self) => {
+      return self.indexOf(value) === index;
+    });
 
   const data = {
     labels,
     datasets: [
       {
         label: "Pemasukan",
-        data: [1, 2, 3, 4, 5, 6, 7],
+        data: FilterReportSummarize.map((e) => e.income),
         backgroundColor: "rgba(255, 99, 132, 0.3)",
         borderColor: "rgba(255, 99, 132, 1)",
         borderWidth: 1,
       },
       {
         label: "Pengeluaran",
-        data: [7, 6, 5, 4, 3, 2, 1],
+        data: FilterReportSummarize.map((e) => e.expense),
         backgroundColor: "rgba(75, 192, 192, 0.3)",
         borderColor: "rgba(75, 192, 192, 1)",
         borderWidth: 1,
@@ -70,8 +88,21 @@ function IncomeChart() {
       </CardHeader>
 
       <CardContent>
+        <Select onValueChange={(event) => setYearFilter(Number(event))}>
+          <SelectTrigger className="w-[180px]">
+            <SelectValue placeholder={yearFilter} />
+          </SelectTrigger>
+          <SelectContent>
+            {getYears.map((e, index) => (
+              <SelectItem key={`key-${e}-${index}`} value={e.toString()}>
+                {e}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+
         <div className="h-80 w-full">
-          <Bar options={options} data={data} /> 
+          <Bar options={options} data={data} />
         </div>
       </CardContent>
     </Card>

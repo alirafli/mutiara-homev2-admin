@@ -67,7 +67,7 @@ async function Dashboard() {
         <ReportTable report={report ?? []} />
         <HouseIncomePie />
       </div>
-      <IncomeChart />
+      <IncomeChart report={report} />
     </div>
   );
 }

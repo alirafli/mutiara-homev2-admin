@@ -19,6 +19,7 @@ import { decrementHouseAmount, deleteReportById } from "../../actions";
 import { toast } from "@/components/ui/use-toast";
 import UpdateReportModal from "../UpdateReportModal";
 import { Badge } from "@/components/ui/badge";
+import { client } from "@/utils/queryClient";
 
 const reportContent = (reportData: ReportFinance) => {
   return [
@@ -109,6 +110,9 @@ export const columns: ColumnDef<ReportFinance>[] = [
       const deleteReport = async () => {
         const result = await deleteReportById(report.id);
         await decrementHouseAmount(report.amount, report.house_id.id);
+        client.refetchQueries({
+          queryKey: ["houseNameQuery"],
+        });
 
         if (result.error && result.error.message) {
           toast({

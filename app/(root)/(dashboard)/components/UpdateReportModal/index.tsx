@@ -28,6 +28,7 @@ import { accountData, categoryData, paymentType } from "@/data/dashboardData";
 import { GetUserNameQuery } from "@/hooks/useUser";
 import { GetHousesNameQuery } from "@/hooks/useHouses";
 import DropDownComboBox from "@/components/ui/DropDownComboBox";
+import { client } from "@/utils/queryClient";
 
 interface UpdateReportModalProps {
   report: {
@@ -80,7 +81,9 @@ function UpdateReportModal({ report, id }: UpdateReportModalProps) {
         payload.house_id
       );
       await incrementHouseAmount(Number(data.amount), payload.house_id);
-
+      client.refetchQueries({ 
+        queryKey: ["houseNameQuery"],
+      });
       if (result.error && result.error.message) {
         toast({
           title: `gagal update ${id?.slice(0, 5)}`,
