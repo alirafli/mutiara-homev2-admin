@@ -4,18 +4,36 @@ import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Pie } from "react-chartjs-2";
+import useHouseQuery from "@/hooks/useHouses";
+import randomColor from "randomcolor";
+import IncomeTable from "./components/IncomeTable";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 function HouseIncomePie() {
+  const { data: houseData } = useHouseQuery();
+
+  if (!houseData) return <h1>loading...</h1>;
+
+  const colors = randomColor({
+    count: houseData.length,
+    luminosity: "bright",
+    format: "rgba",
+    alpha: 0.3,
+  });
+
+  const houseDataRecap = () => {
+    return houseData.map((e) => ({ name: e.name, income: e.income }));
+  };
+
   const data = {
-    labels: ["Pemasukan", "Pengeluaran"],
+    labels: houseDataRecap().map((e) => e.name),
     datasets: [
       {
         label: "Rp",
-        data: [12, 19],
-        backgroundColor: ["rgba(255, 99, 132, 0.3)", "rgba(75, 192, 192, 0.3)"],
-        borderColor: ["rgba(255, 99, 132, 1)", "rgba(75, 192, 192, 1)"],
+        data: houseDataRecap().map((e) => e.income),
+        backgroundColor: colors,
+        borderColor: colors,
         borderWidth: 1,
       },
     ],
@@ -28,9 +46,15 @@ function HouseIncomePie() {
       </CardHeader>
 
       <CardContent>
-        <div className="h-80 w-full">
-          <Pie data={data} className="mx-auto"/>
+        <div className="h-60 w-full mb-5">
+          <Pie
+            options={{ plugins: { legend: { display: false } } }}
+            data={data}
+            className="mx-auto"
+          />
         </div>
+
+        <IncomeTable data={houseData} />
       </CardContent>
     </Card>
   );

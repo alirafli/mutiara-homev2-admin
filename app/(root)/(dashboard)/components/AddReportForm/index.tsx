@@ -27,7 +27,7 @@ import { toast } from "@/components/ui/use-toast";
 
 import { accountData, categoryData, paymentType } from "@/data/dashboardData";
 import { GetUserNameQuery } from "@/hooks/useUser";
-import { GetHousesNameQuery } from "@/hooks/useHouses";
+import useHouseQuery, { GetHousesNameQuery } from "@/hooks/useHouses";
 import DropDownComboBox from "@/components/ui/DropDownComboBox";
 
 interface AddReportFormProps {
@@ -36,6 +36,8 @@ interface AddReportFormProps {
 
 function AddReportForm({ handleModalOpen }: AddReportFormProps) {
   const [isPending, startTransition] = useTransition();
+
+  const { refetch } = useHouseQuery();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -61,6 +63,7 @@ function AddReportForm({ handleModalOpen }: AddReportFormProps) {
       const result = await createReport(payload);
       await incrementHouseAmount(payload.amount, payload.house_id);
 
+      refetch();
       const { error } = JSON.parse(result);
 
       if (error && error.message) {

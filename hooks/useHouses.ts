@@ -1,7 +1,7 @@
 import { getHouseData } from "@/app/(root)/rent-house/actions";
 import { useQuery } from "@tanstack/react-query";
 
-function useHouseQuery(hasRented: boolean, id: undefined | string) {
+function useHouseQuery(hasRented?: boolean, id?: undefined | string) {
   const queryKey = ["houseNameQuery"];
 
   const queryFn = async () => {
