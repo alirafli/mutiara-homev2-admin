@@ -232,7 +232,7 @@ function AddRenterForm({ handleModalOpen }: AddRenterFormProps) {
             render={({ field }) => (
               <DropDownComboBox
                 field={field}
-                datas={GetHousesNameQuery() ?? []}
+                datas={GetHousesNameQuery(true) ?? []}
                 form={form}
                 keyLabel={"house_name"}
                 placeHolder="Pilih rumah"

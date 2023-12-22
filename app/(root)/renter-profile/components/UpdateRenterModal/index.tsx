@@ -19,7 +19,11 @@ import { AiOutlineLoading } from "react-icons/ai";
 import DropDownComboBox from "@/components/ui/DropDownComboBox";
 import { paymentStatusData, rentTimeData, statusData } from "@/data/renterData";
 import { fileToBase64 } from "@/utils/FileToBase64";
-import { updateRenterById, updateUserKtp } from "../../actions";
+import {
+  updateHouseRenter,
+  updateRenterById,
+  updateUserKtp,
+} from "../../actions";
 import { GetHousesNameQuery } from "@/hooks/useHouses";
 
 type FormSchemaWithoutKtpImage = Omit<z.infer<typeof FormSchema>, "ktp_image">;
@@ -49,7 +53,7 @@ function UpdateRenterModal({ renter, id, imageUrl }: UpdateRenterModalProps) {
   const houseWithNullData = () => {
     return [
       { label: "tidak ada", value: null },
-      ...(GetHousesNameQuery() ?? ""),
+      ...(GetHousesNameQuery(true, id) ?? ""),
     ];
   };
 
@@ -88,6 +92,12 @@ function UpdateRenterModal({ renter, id, imageUrl }: UpdateRenterModalProps) {
       amount_remaining: Number(data.amount_remaining),
     };
     startTransition(async () => {
+      await updateHouseRenter(false, null, getValueByTitle("nama rumah", true));
+
+      if (payload.house_name) {
+        await updateHouseRenter(true, id, payload.house_name);
+      }
+
       const result = await updateRenterById(id, payload);
 
       if (result.error && result.error.message) {

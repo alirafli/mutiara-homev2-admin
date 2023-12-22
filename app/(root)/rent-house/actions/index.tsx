@@ -24,12 +24,21 @@ export type AddHousePayload =
       rent_status: boolean;
     };
 
-export async function getHouseData(): Promise<
-  PostgrestSingleResponse<House[]>
-> {
+export async function getHouseData(
+  hasRented = false,
+  id: undefined | string = undefined
+): Promise<PostgrestSingleResponse<House[]>> {
   noStore();
   const supabase = await createSupabaseServerClient();
-  return await supabase.from("house_rent").select(`*, user_id(*)`);
+
+  if (!hasRented) {
+    return await supabase.from("house_rent").select(`*, user_id(*)`);
+  }
+
+  return await supabase
+    .from("house_rent")
+    .select(`*, user_id(*)`)
+    .or(`${id ? `user_id.eq.${id},` : ""}rent_status.eq.${!hasRented}`);
 }
 
 export async function addHouse(
