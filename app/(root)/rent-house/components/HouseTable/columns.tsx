@@ -20,6 +20,7 @@ import { deleteHouseById, deletePhotos } from "../../actions";
 import { toast } from "@/components/ui/use-toast";
 import UpdateHouseModal from "../UpdateHouseModal";
 import MapsPopUp from "@/components/ui/MapsPopUp";
+import { LuArrowDownUp } from "react-icons/lu";
 
 const HouseContent = (houseData: House) => {
   return [
@@ -80,14 +81,18 @@ const renderDetails = (
 
 export const columns: ColumnDef<House>[] = [
   {
-    header: "No",
-    cell: ({ row }) => {
-      return row.index + 1;
-    },
-  },
-  {
     accessorKey: "name",
-    header: "Nama Rumah",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Nama Rumah
+          <LuArrowDownUp className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
   },
   {
     accessorKey: "address",

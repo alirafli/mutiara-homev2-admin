@@ -23,6 +23,7 @@ import {
 import thousandAndDecimalSeparator from "@/utils/NumberFormatter";
 import Image from "next/image";
 import UpdateRenterModal from "../UpdateRenterModal";
+import { LuArrowDownUp } from "react-icons/lu";
 
 const renterContent = (renterData: User) => {
   return [
@@ -71,14 +72,18 @@ const renderStatus = (value: boolean) => {
 
 export const columns: ColumnDef<User>[] = [
   {
-    header: "No",
-    cell: ({ row }) => {
-      return row.index + 1;
-    },
-  },
-  {
     accessorKey: "name",
-    header: "Nama Penyewa",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Nama Penyewa
+          <LuArrowDownUp className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
   },
   {
     accessorKey: "house_name.name",
