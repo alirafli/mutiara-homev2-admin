@@ -85,3 +85,37 @@ export async function updateReportById(
     return { data: null, error: error as Error };
   }
 }
+
+export async function incrementHouseAmount(amount: number, houseId: string) {
+  const supabase = await createSupabaseServerClient();
+
+  try {
+    const { data, error } = await supabase.rpc("income_increment", {
+      x: amount,
+      row_id: houseId,
+    });
+
+    revalidatePath("/");
+
+    return { data, error };
+  } catch (error) {
+    return { data: null, error: error as Error };
+  }
+}
+
+export async function decrementHouseAmount(amount: number, houseId: string) {
+  const supabase = await createSupabaseServerClient();
+
+  try {
+    const { data, error } = await supabase.rpc("income_decrement", {
+      x: amount,
+      row_id: houseId,
+    });
+
+    revalidatePath("/");
+
+    return { data, error };
+  } catch (error) {
+    return { data: null, error: error as Error };
+  }
+}

@@ -148,7 +148,7 @@ export async function updateHouseById(id?: string, payload?: AddHousePayload) {
       .eq("id", id)
       .select();
 
-    revalidatePath("/rent-house");
+    revalidatePath("/");
 
     return { data, error };
   } catch (error) {

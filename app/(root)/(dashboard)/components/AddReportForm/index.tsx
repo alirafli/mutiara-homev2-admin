@@ -22,7 +22,7 @@ import { Textarea } from "@/components/ui/textarea";
 
 import { formSchema } from "./formSchema";
 import CalendarSelect from "./CalendarSelect";
-import { createReport } from "../../actions";
+import { createReport, incrementHouseAmount } from "../../actions";
 import { toast } from "@/components/ui/use-toast";
 
 import { accountData, categoryData, paymentType } from "@/data/dashboardData";
@@ -59,6 +59,7 @@ function AddReportForm({ handleModalOpen }: AddReportFormProps) {
       };
 
       const result = await createReport(payload);
+      await incrementHouseAmount(payload.amount, payload.house_id);
 
       const { error } = JSON.parse(result);
 

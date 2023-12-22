@@ -18,7 +18,11 @@ import CalendarSelect from "../AddReportForm/CalendarSelect";
 import { Textarea } from "@/components/ui/textarea";
 import { AiOutlineLoading } from "react-icons/ai";
 import { useToast } from "@/components/ui/use-toast";
-import { updateReportById } from "../../actions";
+import {
+  decrementHouseAmount,
+  incrementHouseAmount,
+  updateReportById,
+} from "../../actions";
 import { SheetClose } from "@/components/ui/sheet";
 import { accountData, categoryData, paymentType } from "@/data/dashboardData";
 import { GetUserNameQuery } from "@/hooks/useUser";
@@ -71,6 +75,12 @@ function UpdateReportModal({ report, id }: UpdateReportModalProps) {
 
     startTransition(async () => {
       const result = await updateReportById(id, payload);
+      await decrementHouseAmount(
+        Number(getValueByTitle("Nominal Pembayaran")),
+        payload.house_id
+      );
+      await incrementHouseAmount(Number(data.amount), payload.house_id);
+
       if (result.error && result.error.message) {
         toast({
           title: `gagal update ${id?.slice(0, 5)}`,

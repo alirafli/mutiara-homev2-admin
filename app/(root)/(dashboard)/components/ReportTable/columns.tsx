@@ -15,7 +15,7 @@ import thousandAndDecimalSeparator from "@/utils/NumberFormatter";
 import { ColumnDef } from "@tanstack/react-table";
 import { MoreHorizontal } from "lucide-react";
 import ActionDataModal from "@/components/ui/actionDataModal";
-import { deleteReportById } from "../../actions";
+import { decrementHouseAmount, deleteReportById } from "../../actions";
 import { toast } from "@/components/ui/use-toast";
 import UpdateReportModal from "../UpdateReportModal";
 import { Badge } from "@/components/ui/badge";
@@ -108,6 +108,8 @@ export const columns: ColumnDef<ReportFinance>[] = [
 
       const deleteReport = async () => {
         const result = await deleteReportById(report.id);
+        await decrementHouseAmount(report.amount, report.house_id.id);
+
         if (result.error && result.error.message) {
           toast({
             title: `gagal menghapus ${reportIdSlice}`,
