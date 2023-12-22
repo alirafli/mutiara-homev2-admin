@@ -19,6 +19,7 @@ import Photos from "./Photos";
 import { deleteHouseById, deletePhotos } from "../../actions";
 import { toast } from "@/components/ui/use-toast";
 import UpdateHouseModal from "../UpdateHouseModal";
+import MapsPopUp from "@/components/ui/MapsPopUp";
 
 const HouseContent = (houseData: House) => {
   return [
@@ -53,7 +54,11 @@ const renderIsActive = (value: boolean) => {
   );
 };
 
-const renderDetails = (title: string, value: string | number | boolean) => {
+const renderDetails = (
+  title: string,
+  value: string | number | boolean,
+  houseData: House
+) => {
   if (title === "Pemasukan" || title === "Harga per Bulan")
     return `Rp${thousandAndDecimalSeparator(Number(value))}`;
 
@@ -64,6 +69,10 @@ const renderDetails = (title: string, value: string | number | boolean) => {
 
   if (title === "Status Sewa") {
     return renderIsActive(value as boolean);
+  }
+
+  if (title === "link maps") {
+    return <MapsPopUp position={value as string} houseData={houseData} />;
   }
 
   return value?.toString() ?? "-";
@@ -161,7 +170,7 @@ export const columns: ColumnDef<House>[] = [
                     <h1 className="scroll-m-20 border-b-2 text-lg font-medium tracking-tight first:mt-0 mb-2">
                       {data.title}
                     </h1>
-                    <h2>{renderDetails(data.title, data.value)}</h2>
+                    <h2>{renderDetails(data.title, data.value, houseData)}</h2>
                   </div>
                 ))}
               </ActionDataModal>
