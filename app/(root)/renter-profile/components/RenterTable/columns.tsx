@@ -15,7 +15,11 @@ import { toast } from "@/components/ui/use-toast";
 import { User } from "@/types/user";
 import { ColumnDef } from "@tanstack/react-table";
 import { MoreHorizontal } from "lucide-react";
-import { deleteKtpImage, deleteRenterById } from "../../actions";
+import {
+  deleteKtpImage,
+  deleteRenterById,
+  updateHouseRenter,
+} from "../../actions";
 import thousandAndDecimalSeparator from "@/utils/NumberFormatter";
 import Image from "next/image";
 import UpdateRenterModal from "../UpdateRenterModal";
@@ -115,6 +119,7 @@ export const columns: ColumnDef<User>[] = [
       const renterIdSlice = renterData.id?.slice(0, 5);
 
       const deleteRenter = async () => {
+        await updateHouseRenter(false, null, renterData.house_name.id);
         const result = await deleteRenterById(renterData.id);
         await deleteKtpImage(renterData.image_url);
 

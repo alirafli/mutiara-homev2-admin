@@ -143,13 +143,17 @@ export async function deleteKtpImage(filePath?: string) {
   return { data, error };
 }
 
-export async function updateHouseRenter(userId: string, houseId: string) {
+export async function updateHouseRenter(
+  rentStatus: boolean,
+  userId: string | null,
+  houseId: string
+) {
   const supabase = await createSupabaseServerClient();
 
   try {
     const { data, error } = await supabase
       .from("house_rent")
-      .update({ rent_status: true, user_id: userId })
+      .update({ rent_status: rentStatus, user_id: userId })
       .eq("id", houseId)
       .select();
 

@@ -62,7 +62,7 @@ function AddRenterForm({ handleModalOpen }: AddRenterFormProps) {
     };
     startTransition(async () => {
       const { user: userData, error } = await addUser(payload);
-      await updateHouseRenter(userData?.id ?? "", payload.house_name);
+      await updateHouseRenter(true, userData?.id ?? "", payload.house_name);
 
       if (selectedFile && userData) {
         const fileData = (await fileToBase64(selectedFile)) as string;
