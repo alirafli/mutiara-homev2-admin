@@ -142,3 +142,21 @@ export async function deleteKtpImage(filePath?: string) {
 
   return { data, error };
 }
+
+export async function updateHouseRenter(userId: string, houseId: string) {
+  const supabase = await createSupabaseServerClient();
+
+  try {
+    const { data, error } = await supabase
+      .from("house_rent")
+      .update({ rent_status: true, user_id: userId })
+      .eq("id", houseId)
+      .select();
+
+    revalidatePath("/renter-profile");
+
+    return { data, error };
+  } catch (error) {
+    return { data: null, error: error as Error };
+  }
+}

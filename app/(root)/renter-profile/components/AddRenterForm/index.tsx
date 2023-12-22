@@ -15,7 +15,12 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { addUser, updateRenterById, uploadUserKtp } from "../../actions";
+import {
+  addUser,
+  updateHouseRenter,
+  updateRenterById,
+  uploadUserKtp,
+} from "../../actions";
 import { toast } from "@/components/ui/use-toast";
 import { DialogFooter } from "@/components/ui/dialog";
 import { AiOutlineLoading } from "react-icons/ai";
@@ -55,9 +60,9 @@ function AddRenterForm({ handleModalOpen }: AddRenterFormProps) {
       payment_status: data.payment_status === "ya" ?? false,
       amount_remaining: 0,
     };
-
     startTransition(async () => {
       const { user: userData, error } = await addUser(payload);
+      await updateHouseRenter(userData?.id ?? "", payload.house_name);
 
       if (selectedFile && userData) {
         const fileData = (await fileToBase64(selectedFile)) as string;
