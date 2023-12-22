@@ -2,13 +2,20 @@ import { Metadata } from "next";
 import React from "react";
 import HouseTable from "./components/HouseTable";
 import { getHouseData } from "./actions";
+import { readUserSession } from "@/lib/actions";
+import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "Rumah Sewa",
 };
 
 async function page() {
+  const { data } = await readUserSession();
   const { data: Houses } = await getHouseData();
+
+  if (!data.session) {
+    return redirect("/sign-in");
+  }
 
   if (!Houses) {
     return <h1>loading</h1>;
