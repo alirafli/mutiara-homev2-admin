@@ -49,7 +49,7 @@ function AddReportForm({ handleModalOpen }: AddReportFormProps) {
       created_at: new Date(Date.now()),
       note: "",
       category: "Pemasukan",
-      type: "Lunas"
+      type: "Lunas",
     },
   });
 
@@ -117,7 +117,7 @@ function AddReportForm({ handleModalOpen }: AddReportFormProps) {
           />
         </div>
 
-        <div className="flex gap-4 flex-col md:flex-row">
+        <div className="flex gap-4 flex-col md:flex-row items-end">
           <FormField
             control={form.control}
             name="renter"
@@ -148,7 +148,7 @@ function AddReportForm({ handleModalOpen }: AddReportFormProps) {
           />
         </div>
 
-        <div className="flex gap-4 flex-col md:flex-row">
+        <div className="flex gap-4 flex-col md:flex-row items-start">
           <div className="flex gap-4 flex-col w-full">
             <FormField
               control={form.control}
