@@ -33,14 +33,14 @@ const renterContent = (renterData: User) => {
     { title: "nik", value: renterData.nik },
     { title: "nomor telpon", value: renterData.phone_number },
     { title: "status pembayaran", value: renterData.payment_status },
+    { title: "sisa pembayaran", value: renterData.amount_remaining },
+    { title: "status menetap", value: renterData.is_active },
+    { title: "waktu sewa", value: renterData.rent_time },
     {
       title: "nama rumah",
       value: renterData?.house_name?.name ?? "-",
       id: renterData?.house_name?.id ?? "-",
     },
-    { title: "status menetap", value: renterData.is_active },
-    { title: "waktu sewa", value: renterData.rent_time },
-    { title: "sisa pembayaran", value: renterData.amount_remaining },
   ];
 };
 
@@ -115,6 +115,14 @@ export const columns: ColumnDef<User>[] = [
     header: "Status Pembayaran",
     cell: ({ getValue }) => {
       return renderStatus(getValue() as boolean);
+    },
+  },
+  {
+    accessorKey: "amount_remaining",
+    header: "Sisa Pembayaran",
+    cell: ({ getValue }) => {
+      const value = getValue() as number;
+      return `Rp${thousandAndDecimalSeparator(value)}`;
     },
   },
   {

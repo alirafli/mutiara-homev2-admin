@@ -171,11 +171,13 @@ export async function changeUserPaymentStatusToFalse() {
   try {
     const { data, error } = await supabase
       .from("user")
-      .update({ payment_status: false })
+      .update({ payment_status: false, amount_remaining: 0 })
       .eq("role", "renter")
       .select();
 
-    revalidatePath("/");
+    await supabase.rpc("update_user_money");
+
+    revalidatePath("/renter-profile");
 
     return { data, error };
   } catch (error) {
