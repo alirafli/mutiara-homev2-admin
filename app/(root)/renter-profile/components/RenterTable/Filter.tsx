@@ -11,12 +11,28 @@ import {
 } from "@/components/ui/select";
 import { Table } from "@tanstack/react-table";
 import { User } from "@/types/user";
+import AlertActionModal from "@/components/ui/AlertActionModal";
+import { changeUserPaymentStatusToFalse } from "../../actions";
+import { toast } from "@/components/ui/use-toast";
 
 type FilterProps = {
   table: Table<User>;
 };
 
 function Filter({ table }: FilterProps) {
+  const changeUserPaymentStatus = async () => {
+    const { error } = await changeUserPaymentStatusToFalse();
+
+    if (error && error.message) {
+      toast({
+        title: `gagal mengubah status`,
+      });
+    } else {
+      toast({
+        title: `berhasil mengubah status`,
+      });
+    }
+  };
   return (
     <div className="flex gap-6">
       <Input
@@ -77,6 +93,13 @@ function Filter({ table }: FilterProps) {
           </SelectGroup>
         </SelectContent>
       </Select>
+
+      <AlertActionModal
+        buttonText="Ubah semua menjadi Belum Bayar"
+        title="apakah anda yakin?"
+        description="Semua penyewa akan diubah status pembayarannya menjadi 'Belum Bayar'"
+        onContinue={changeUserPaymentStatus}
+      />
     </div>
   );
 }

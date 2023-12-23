@@ -42,7 +42,7 @@ function AddRenterForm({ handleModalOpen }: AddRenterFormProps) {
     defaultValues: {
       is_active: "ya",
       payment_status: "tidak",
-      rent_time: "tiga bulan",
+      rent_time: "satu bulan",
     },
   });
 

@@ -22,7 +22,11 @@ import { Textarea } from "@/components/ui/textarea";
 
 import { formSchema } from "./formSchema";
 import CalendarSelect from "./CalendarSelect";
-import { createReport, incrementHouseAmount } from "../../actions";
+import {
+  createReport,
+  incrementHouseAmount,
+  updateUserAfterAddReport,
+} from "../../actions";
 import { toast } from "@/components/ui/use-toast";
 
 import { accountData, categoryData, paymentType } from "@/data/dashboardData";
@@ -44,6 +48,8 @@ function AddReportForm({ handleModalOpen }: AddReportFormProps) {
     defaultValues: {
       created_at: new Date(Date.now()),
       note: "",
+      category: "Pemasukan",
+      type: "Lunas"
     },
   });
 
@@ -61,6 +67,8 @@ function AddReportForm({ handleModalOpen }: AddReportFormProps) {
       };
 
       const result = await createReport(payload);
+      await updateUserAfterAddReport(payload.renter_id);
+
       if (payload.category === "Pemasukan") {
         await incrementHouseAmount(payload.amount, payload.house_id);
       }

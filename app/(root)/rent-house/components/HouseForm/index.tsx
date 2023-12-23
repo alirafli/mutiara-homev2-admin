@@ -36,6 +36,7 @@ function AddHouseForm({ handleModalOpen }: AddRenterFormProps) {
     defaultValues: {
       rent_status: "tidak",
       has_previous: "tidak",
+      name: "House "
     },
   });
 

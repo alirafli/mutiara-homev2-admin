@@ -164,3 +164,21 @@ export async function updateHouseRenter(
     return { data: null, error: error as Error };
   }
 }
+
+export async function changeUserPaymentStatusToFalse() {
+  const supabase = await createSupabaseServerClient();
+
+  try {
+    const { data, error } = await supabase
+      .from("user")
+      .update({ payment_status: false })
+      .eq("role", "renter")
+      .select();
+
+    revalidatePath("/");
+
+    return { data, error };
+  } catch (error) {
+    return { data: null, error: error as Error };
+  }
+}

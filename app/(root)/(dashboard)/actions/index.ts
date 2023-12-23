@@ -119,3 +119,21 @@ export async function decrementHouseAmount(amount: number, houseId: string) {
     return { data: null, error: error as Error };
   }
 }
+
+export async function updateUserAfterAddReport(id?: string) {
+  const supabase = await createSupabaseServerClient();
+
+  try {
+    const { data, error } = await supabase
+      .from("user")
+      .update({ payment_status: true, amount_remaining: 0 })
+      .eq("id", id)
+      .select();
+
+    revalidatePath("/");
+
+    return { data, error };
+  } catch (error) {
+    return { data: null, error: error as Error };
+  }
+}
