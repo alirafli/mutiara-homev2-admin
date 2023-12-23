@@ -87,7 +87,17 @@ export const columns: ColumnDef<User>[] = [
   },
   {
     accessorKey: "house_name.name",
-    header: "Rumah Sewa",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Rumah Sewa
+          <LuArrowDownUp className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
   },
   {
     accessorKey: "is_active",

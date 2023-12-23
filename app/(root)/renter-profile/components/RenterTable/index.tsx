@@ -8,6 +8,7 @@ import {
   getCoreRowModel,
   getFilteredRowModel,
   getPaginationRowModel,
+  getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
 import { columns } from "./columns";
@@ -46,6 +47,7 @@ function RenterTable({ users }: RenterTableProps) {
     getPaginationRowModel: getPaginationRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     onColumnFiltersChange: setColumnFilters,
+    getSortedRowModel: getSortedRowModel(),
     state: {
       columnFilters,
     },
