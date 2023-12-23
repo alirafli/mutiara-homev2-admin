@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
@@ -21,6 +20,7 @@ import { toast } from "@/components/ui/use-toast";
 import UpdateHouseModal from "../UpdateHouseModal";
 import MapsPopUp from "@/components/ui/MapsPopUp";
 import { LuArrowDownUp } from "react-icons/lu";
+import AlertActionModal from "@/components/ui/AlertActionModal";
 
 const HouseContent = (houseData: House) => {
   return [
@@ -191,18 +191,14 @@ export const columns: ColumnDef<House>[] = [
                 />
               </ActionDataModal>
             </div>
-
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <form action={deleteHouse}>
-                <Button
-                  variant="ghost"
-                  className="text-red-800 dark:text-red-700 m-0 p-0 w-fit h-fit"
-                >
-                  Delete {houseIdSlice}
-                </Button>
-              </form>
-            </DropdownMenuItem>
+
+            <AlertActionModal
+              buttonText={`Hapus ${houseIdSlice}`}
+              title="apakah anda yakin?"
+              description={`Rumah ${houseIdSlice} akan dihapus secara permanen!`}
+              onContinue={deleteHouse}
+            />
           </DropdownMenuContent>
         </DropdownMenu>
       );

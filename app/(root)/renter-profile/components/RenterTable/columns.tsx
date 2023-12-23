@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
@@ -24,6 +23,7 @@ import thousandAndDecimalSeparator from "@/utils/NumberFormatter";
 import Image from "next/image";
 import UpdateRenterModal from "../UpdateRenterModal";
 import { LuArrowDownUp } from "react-icons/lu";
+import AlertActionModal from "@/components/ui/AlertActionModal";
 
 const renterContent = (renterData: User) => {
   return [
@@ -205,16 +205,12 @@ export const columns: ColumnDef<User>[] = [
             </div>
 
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <form action={deleteRenter}>
-                <Button
-                  variant="ghost"
-                  className="text-red-800 dark:text-red-700 m-0 p-0 w-fit h-fit"
-                >
-                  Delete {renterIdSlice}
-                </Button>
-              </form>
-            </DropdownMenuItem>
+            <AlertActionModal
+              buttonText={`Hapus ${renterIdSlice}`}
+              title="apakah anda yakin?"
+              description={`Penyewa ${renterIdSlice} akan dihapus secara permanen!`}
+              onContinue={deleteRenter}
+            />
           </DropdownMenuContent>
         </DropdownMenu>
       );

@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
@@ -20,6 +19,7 @@ import { toast } from "@/components/ui/use-toast";
 import UpdateReportModal from "../UpdateReportModal";
 import { Badge } from "@/components/ui/badge";
 import { client } from "@/utils/queryClient";
+import AlertActionModal from "@/components/ui/AlertActionModal";
 
 const reportContent = (reportData: ReportFinance) => {
   return [
@@ -170,16 +170,12 @@ export const columns: ColumnDef<ReportFinance>[] = [
             </div>
 
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <form action={deleteReport}>
-                <Button
-                  variant="ghost"
-                  className="text-red-800 dark:text-red-700 m-0 p-0 w-fit h-fit"
-                >
-                  Delete {reportIdSlice}
-                </Button>
-              </form>
-            </DropdownMenuItem>
+            <AlertActionModal
+              buttonText={`Hapus ${reportIdSlice}`}
+              title="apakah anda yakin?"
+              description={`Laporan ${reportIdSlice} akan dihapus secara permanen!`}
+              onContinue={deleteReport}
+            />
           </DropdownMenuContent>
         </DropdownMenu>
       );
