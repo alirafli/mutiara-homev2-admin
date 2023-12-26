@@ -7,10 +7,10 @@ import { getUserById } from "@/lib/actions";
 import Sidebar from "@/components/ui/sidebar";
 import { ReduxProviders } from "@/lib/redux/provider";
 import LogoutButton from "@/components/ui/logoutButton";
-import { Toaster } from "@/components/ui/toaster";
 import Provider from "@/utils/provider";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { Toaster } from "@/components/ui/toaster";
 
 const inter = Inter({ subsets: ["latin"] });
 

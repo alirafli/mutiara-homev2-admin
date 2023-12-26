@@ -13,3 +13,9 @@ export const rentTimeData = [
   { label: "tiga bulan", value: "tiga bulan" },
   { label: "enam bulan", value: "enam bulan" },
 ];
+
+export const renterReportStatus = [
+  { label: "selesai", value: "selesai" },
+  { label: "proses", value: "proses" },
+  { label: "menunggu", value: "menunggu" },
+];
