@@ -8,5 +8,6 @@ export interface Report {
   status: string;
   note?: string;
   answer?: string;
+  image_url?: string;
   user_id: User;
 }
