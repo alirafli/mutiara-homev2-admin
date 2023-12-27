@@ -173,7 +173,7 @@ export const columns: ColumnDef<User>[] = [
                     fill
                   />
                 </div>
-                {renterContent(renterData).map((data) => (
+                {renterContent(renterData).filter((e) => e.title !== "password").map((data) => (
                   <div key={data.title} className="mb-4">
                     <h1 className="scroll-m-20 border-b-2 text-lg font-medium tracking-tight first:mt-0 mb-2">
                       {data.title}
