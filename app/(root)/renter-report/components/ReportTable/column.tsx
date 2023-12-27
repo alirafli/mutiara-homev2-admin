@@ -17,6 +17,7 @@ import { MoreHorizontal } from "lucide-react";
 import { LuArrowDownUp } from "react-icons/lu";
 import ActionDataModal from "@/components/ui/actionDataModal";
 import UpdateReport from "../UpdateReport";
+import Image from "next/image";
 
 const renderStatus = (status: string) => {
   return (
@@ -114,6 +115,14 @@ export const columns: ColumnDef<Report>[] = [
                 status={<Badge>View</Badge>}
               >
                 <div className="flex flex-col gap-6 break-all">
+                  <div className="mx-auto w-[300px] h-[150px] relative mb-5">
+                    <Image
+                      src={`https://jhpvantiskndecjywdon.supabase.co/storage/v1/object/public/images/${reportData.image_url}`}
+                      alt="image"
+                      className="bg-contain mx-auto aspect-video object-cover rounded-md"
+                      fill
+                    />
+                  </div>
                   <div className="flex gap-6 items-center mt-6">
                     <b>status:</b>
                     {renderStatus(reportData.status)}
