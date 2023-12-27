@@ -34,14 +34,14 @@ function Filter({ table }: FilterProps) {
   //   }
   // };
   return (
-    <div className="flex gap-6">
+    <div className="flex gap-6 flex-col md:flex-row mb-6 md:items-start items-stretch">
       <Input
         placeholder="Filter Penyewa"
         value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
         onChange={(event) =>
           table.getColumn("name")?.setFilterValue(event.target.value)
         }
-        className="max-w-xs mb-6"
+        className=""
       />
 
       <Select
@@ -56,7 +56,7 @@ function Filter({ table }: FilterProps) {
             )
         }
       >
-        <SelectTrigger className="w-[220px]">
+        <SelectTrigger className="w-[100%] md:w-[220px]">
           <SelectValue placeholder="Filter Status Menetap" />
         </SelectTrigger>
         <SelectContent>
@@ -81,7 +81,7 @@ function Filter({ table }: FilterProps) {
             )
         }
       >
-        <SelectTrigger className="w-[250px]">
+        <SelectTrigger className="w-[100%] md:w-[250px]">
           <SelectValue placeholder="Filter Status Pembayaran" />
         </SelectTrigger>
         <SelectContent>
