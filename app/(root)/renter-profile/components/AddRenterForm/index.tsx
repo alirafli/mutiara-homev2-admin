@@ -19,6 +19,7 @@ import {
   addUser,
   updateHouseRenter,
   updateRenterById,
+  updateUserHouseValue,
   uploadUserKtp,
 } from "../../actions";
 import { toast } from "@/components/ui/use-toast";
@@ -73,6 +74,7 @@ function AddRenterForm({ handleModalOpen }: AddRenterFormProps) {
         );
 
         await updateRenterById(userData.id, { image_url: data?.path });
+        await updateUserHouseValue(userData.id);
 
         if (imageError && imageError.message) {
           toast({

@@ -22,6 +22,7 @@ import { fileToBase64 } from "@/utils/FileToBase64";
 import {
   updateHouseRenter,
   updateRenterById,
+  updateUserHouseValue,
   updateUserKtp,
 } from "../../actions";
 import { GetHousesNameQuery } from "@/hooks/useHouses";
@@ -99,6 +100,10 @@ function UpdateRenterModal({ renter, id, imageUrl }: UpdateRenterModalProps) {
       }
 
       const result = await updateRenterById(id, payload);
+
+      if (data.payment_status === "tidak") {
+        await updateUserHouseValue(id);
+      }
 
       if (result.error && result.error.message) {
         toast({

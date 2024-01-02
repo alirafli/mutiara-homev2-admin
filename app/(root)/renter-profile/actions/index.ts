@@ -184,3 +184,19 @@ export async function changeUserPaymentStatusToFalse() {
     return { data: null, error: error as Error };
   }
 }
+
+export async function updateUserHouseValue(userId: string) {
+  const supabase = await createSupabaseServerClient();
+
+  try {
+    const { data, error } = await supabase.rpc("update_user_money_by_id_user", {
+      x: userId,
+    });
+
+    revalidatePath("/");
+
+    return { data, error };
+  } catch (error) {
+    return { data: null, error: error as Error };
+  }
+}
